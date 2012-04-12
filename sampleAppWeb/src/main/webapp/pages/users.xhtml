@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition  template="../templates/default.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Sample Web Application" />
+	</ui:define>
+	
+	<ui:define name="headerLogoTopNav">
+		<h:form>
+		<!-- Logo + Top Nav -->
+		<div id="top">
+			<h1><a href="#">SpringTime</a></h1>
+			<div id="top-navigation">
+				Welcome <a href="#"><strong>Administrator</strong></a>
+				<span>|</span>
+				<span>|</span>
+				<a href="#">My Profile</a>
+				<span>|</span>
+				<p:commandLink action="#{loginBean.logout}" value="Logout" />
+			</div>
+		</div>
+		<!-- End Logo + Top Nav -->
+		
+		<!-- Main Nav -->
+		<div id="navigation">
+			<ul>
+			    <li><a href="/pages/admin/users.xhtml" class="active"><span>User Management</span></a></li>
+			</ul>
+		</div>
+		<!-- End Main Nav -->
+		</h:form>
+	</ui:define>
+	
+	<ui:define name="content">
+
+		<!-- Small Nav -->
+		<div class="small-nav">
+			<a href="#">User Management</a>
+			<span>&gt;</span>
+			List Users
+		</div>
+		<!-- End Small Nav -->
+		
+		<!-- Main -->
+		<div id="main">
+			<div class="cl">&nbsp;</div>
+			
+			<!-- Content -->
+			<div id="content">
+				
+				<!-- Box -->
+				<div class="box">
+					<h:form id="form">
+						<p:dataTable var="person" value="#{personBean.lazyModel}"
+							rowKey="#{person.username}" paginator="true" rows="10"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowsPerPageTemplate="5,10,30,50,100,500"
+							selection="#{personBean.person}" selectionMode="single"
+							id="personsTable" paginatorPosition="top"
+							widgetVar="personsTable"
+							emptyMessage="No users found with given criteria">
+
+							<p:ajax event="rowSelect" update=":form:display"
+								oncomplete="personDialog.show()" />
+
+							<f:facet name="header">  
+					            <p:outputPanel>  
+					            	<h:outputText value="List of Users" style="float:left; margin-top: 5px;" />  
+					                <p:inputText  id="globalFilter" onkeyup="personsTable.filter()" 
+					                	style="float:right;width:150px" />  
+					                <h:outputText value="Search all fields:"  style="float:right; margin-top: 5px; margin-right: 5px;" />  
+					            </p:outputPanel>  
+					        </f:facet>  
+  
+							<p:column headerText="User Name" sortBy="#{person.username}"
+								filterBy="#{person.username}" 
+								id="username">  
+					            #{person.username}  
+					        </p:column>
+					        
+					        <p:column headerText="First Name" sortBy="#{person.firstName}"
+								filterBy="#{person.firstName}"
+								id="firstName">  
+					            #{person.firstName}  
+					        </p:column>
+					        
+					        <p:column headerText="Last Name" sortBy="#{person.lastName}"
+								filterBy="#{person.lastName}"  
+								id="lastName">  
+					            #{person.lastName}  
+					        </p:column>
+
+							<p:column headerText="Email" sortBy="#{person.email}" 
+								filterBy="#{person.email}" 
+                				id="email">  
+					            #{person.email}  
+					        </p:column>
+					        
+					        <p:column headerText="Active" sortBy="#{person.isEnabled}" 
+								filterBy="#{person.isEnabled}"  
+                				id="active"> #{(person.isEnabled eq "true") ? "Yes" : "No"}  
+					        </p:column>
+						</p:dataTable>
+
+						<p:dialog header="User Detail" widgetVar="personDialog" resizable="false"  
+					              width="380" showEffect="explode" hideEffect="explode" height="150">  
+					  
+					        <h:panelGrid id="display" columns="3" cellpadding="4">  
+					  
+					            <h:outputText value="User Name " />  
+					            <h:outputText value=" : " />  
+					            <h:outputText value="#{personBean.person.username}" id="username"/>  
+					  			
+					  			<h:outputText value="First Name " /> 
+					  			<h:outputText value=" : " /> 
+					            <h:outputText value="#{personBean.person.firstName}" id="firstName"/>
+					           
+					            <h:outputText value="Last Name " />  
+					            <h:outputText value=" : " />
+					            <h:outputText value="#{personBean.person.lastName}" id="lastName"/>
+					            
+					            
+					            <h:outputText value="Civility " />  
+					            <h:outputText value=" : " />
+					            <h:outputText value="#{personBean.person.civility.label}" id="civility"/>  
+					  			
+					            
+					            <h:outputText value="Birth Date " />  
+					            <h:outputText value=" : " />
+					            <h:outputText value="#{personBean.person.birthDate}" id="birthDate"/>  
+					            
+					            <h:outputText value="Email" /> 
+					            <h:outputText value=" : " /> 
+					            <h:outputText value="#{personBean.person.email}" id="email"/>  
+					            
+					            <h:outputText value="Active:" />  
+					            <h:outputText value=" : " />
+					            <h:outputText value='#{(person.isEnabled eq "true") ? "Yes" : "No"}' id="isEnabled" />  
+					            
+					            
+					        </h:panelGrid>  
+					    </p:dialog>  
+					</h:form>	
+					
+				</div>
+				<!-- End Box -->
+
+			</div>
+			<!-- End Content -->
+			
+			<!-- Sidebar -->
+			<div id="sidebar">
+				
+				<!-- Box -->
+				<div class="box">
+					
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>Management</h2>
+					</div>
+					<!-- End Box Head-->
+					
+					<div class="box-content">
+					<p:panel rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+						<h:outputLink styleClass="add-button" id="loginLink" value="javascript:void(0)" onclick="dlg.show()" title="login">  
+							<span>Add new User</span>
+						</h:outputLink> 
+						
+						<div class="cl">&nbsp;</div>
+						
+						<p class="select-all">
+							<input type="checkbox" class="checkbox" />
+								<label>select all</label></p>
+						<p><a href="#">Delete Selected</a></p>
+						
+						<p:dialog id="dialog" header="Login" widgetVar="dlg">
+						<h:form>
+							 <h:panelGrid id="display" columns="3" cellpadding="4">  
+					  
+					            <h:outputText value="User Name " />  
+					            <h:outputText value=" : " />  
+					            <p:inputText value="#{personBean.person.username}" 
+										id="username" required="true" label="User Name" />
+					  			
+					  			<h:outputText value="First Name " /> 
+					  			<h:outputText value=" : " /> 
+					  			<p:inputText value="#{personBean.person.firstName}" 
+										id="firstName" required="true" label="First Name" />
+					           
+					            <h:outputText value="Last Name " />  
+					            <h:outputText value=" : " />
+					            <p:inputText value="#{personBean.person.lastName}" 
+										id="lastName" required="true" label="Last Name" />
+					            
+					            
+					            <h:outputText value="Civility " />  
+					            <h:outputText value=" : " />
+					            <p:inputText value="#{personBean.person.civility}" 
+										id="civility" required="true" label="Civility" />
+					  			
+					            
+					            <h:outputText value="Birth Date " />  
+					            <h:outputText value=" : " />
+					            <p:inputText value="#{personBean.person.birthDate}" 
+										id="birthDate" required="true" label="Birth Date" /> 
+					            
+					            <h:outputText value="Email" /> 
+					            <h:outputText value=" : " /> 
+					            <p:inputText value="#{personBean.person.email}" 
+										id="email" required="true" label="Email" />
+					            
+					            <h:outputText value="Active:" />  
+					            <h:outputText value=" : " />
+					            <p:inputText value="#{personBean.person.isEnabled}" 
+										id="isEnabled" required="true" label="Active" />
+										
+								<f:facet name="footer">
+									<p:commandButton id="registerButton" value="Register User" 
+										actionListener="#{loginBean.login}" 
+										oncomplete="handleRegisterRequest(xhr, status, args)"/>
+								</f:facet>
+					        </h:panelGrid>  
+							
+						 </h:form>
+						 </p:dialog>
+					
+					<script type="text/javascript">
+						function handleRegisterRequest(xhr, status, args) {
+							if(args.validationFailed || !args.loggedIn) {
+								jQuery('#dialog').effect("shake", { times:3 }, 100);
+							} else {
+								dlg.hide();
+								jQuery('#loginLink').fadeOut();
+							}
+						}
+					</script>
+					</p:panel>
+						<div class="cl">&nbsp;</div>
+						
+					</div>
+				</div>
+				<!-- End Box -->
+			</div>
+			<!-- End Sidebar -->
+			
+			<div class="cl">&nbsp;</div>			
+		</div>
+		<!-- Main -->
+	</ui:define>
+</ui:composition>
+</html>

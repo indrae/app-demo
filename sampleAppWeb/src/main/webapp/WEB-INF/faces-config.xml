@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ! (c) Copyright 2005-2012 JAXIO, www.jaxio.com ! Source code generated 
+	by Celerio, a Jaxio product ! Want to use Celerio within your company? email 
+	us at info@jaxio.com ! Follow us on twitter: @springfuse ! Template pack-jsf2-primefaces-sd:src/main/webapp/WEB-INF/faces-config.p.vm.xml -->
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	<application>
+		 <resource-handler>com.app.demo.web.util.PrimeResourceHandlerWithCache</resource-handler>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+	<factory>
+		<exception-handler-factory>com.app.demo.web.filter.ViewExpiredExceptionExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+
+</faces-config>

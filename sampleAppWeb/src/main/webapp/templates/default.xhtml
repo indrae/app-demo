@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<f:view>
+	<h:head>
+		<title><ui:insert name="title" /></title>
+		<meta http-equiv="X-UA-Compatible" content="IE=7" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="cache-control"
+			content="no-cache, no-store, must-revalidate, max-age=0" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv='refresh'
+			content="#{session.maxInactiveInterval}; URL=#{request.requestURI}" />
+		<h:outputStylesheet name="style.css" library="css"  />	
+	</h:head>
+	<h:body>
+		<!-- Header -->
+		<div id="header">
+			<div class="shell">
+				<ui:insert name="headerLogoTopNav" />
+				<ui:insert name="headerMainNav" />
+			</div>
+		</div>
+		<!-- End Header -->
+	
+		<!-- Container -->
+		<div id="container">
+			<div class="shell">
+    			<ui:include src="/templates/includes/alertSessionTimeOut.xhtml" />
+				<ui:insert name="content" />
+			</div>
+		</div>
+		<!-- End Container -->
+	
+		<!-- Footer -->
+		<div id="footer">
+			<div class="shell">
+				<ui:include src="/templates/includes/footer.xhtml" />
+			</div>
+		</div>
+		<!-- End Footer -->
+		
+	</h:body>
+
+</f:view>
+</html>

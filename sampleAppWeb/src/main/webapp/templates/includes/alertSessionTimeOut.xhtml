@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form prependId="false">
+		<p:idleMonitor timeout="4000"   rendered="#{(request.remoteUser != null)}" 
+            onidle="startDialogTimer()" onactive="resetPageTimer()"  />  
+            
+		<p:dialog 
+				  id="timeoutSession"
+				  header="Your session is about to expire!"
+                  widgetVar="timeoutDialog" 
+                  showEffect="fade" 
+                  hideEffect="fade" 
+                  modal="true"
+                  width="400"
+                  height="110"
+                  closable="false"
+                  draggable="false"
+                  resizable="false"   
+                  appendToBody="true">              
+          		<br/>
+          		<p>
+            		<span class="ui-icon ui-icon-alert" style="float:left; margin: 8px 8px 0;"></span>
+            		<p:panel>You will be logged off in
+            			<span id="dialog-countdown" style="font-weight:bold"></span>
+            			&nbsp;seconds.
+            		</p:panel>
+          		</p>
+          		<br/>
+         		<p style="font-weight: bold;">Move your cursor to continue your session!</p>  
+         		<p:commandButton id="button-autoLogout" value="Logout" style="visibility:hidden;"
+         			action="#{loginBean.logout}"   />          
+        </p:dialog> 
+        
+  	</h:form>
+     <script type="text/javascript">
+      var handleDialog = null;
+
+      function startDialogTimer() { 
+        timeoutDialog.show(); 
+        var redirectPage = "#{request.contextPath}/logout";
+        var loopTill = 20;
+        var reduce = 1;
+        var countDownDiv = "dialog-countdown";
+        
+        var e = null;
+        if(!e)
+          e = document.getElementById(countDownDiv);
+        e.innerHTML = loopTill;
+        handleDialog = setInterval(function() {
+          if(loopTill == 0) {
+            clearInterval(handleDialog);
+            window.location.href = redirectPage;
+          }
+          else {
+            loopTill -= reduce;
+            e.innerHTML = loopTill;
+          }
+        }, reduce * 1000);
+      }
+      function resetPageTimer()  {
+        timeoutDialog.hide();
+        clearInterval(handleDialog);
+      }            
+     </script>
+
+    
+</ui:composition>
+</html>
