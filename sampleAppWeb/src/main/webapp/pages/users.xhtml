@@ -14,36 +14,14 @@
 	</ui:define>
 	
 	<ui:define name="headerLogoTopNav">
-		<h:form>
-		<!-- Logo + Top Nav -->
-		<div id="top">
-			<h1><a href="#">SpringTime</a></h1>
-			<div id="top-navigation">
-				Welcome <a href="#"><strong>Administrator</strong></a>
-				<span>|</span>
-				<span>|</span>
-				<a href="#">My Profile</a>
-				<span>|</span>
-				<p:commandLink action="#{loginBean.logout}" value="Logout" />
-			</div>
-		</div>
-		<!-- End Logo + Top Nav -->
-		
-		<!-- Main Nav -->
-		<div id="navigation">
-			<ul>
-			    <li><a href="/pages/admin/users.xhtml" class="active"><span>User Management</span></a></li>
-			</ul>
-		</div>
-		<!-- End Main Nav -->
-		</h:form>
+		<ui:include src="/templates/includes/header.xhtml" />
 	</ui:define>
 	
 	<ui:define name="content">
 
 		<!-- Small Nav -->
 		<div class="small-nav">
-			<a href="#">User Management</a>
+			<a href="/pages/users.xhtml">User Management</a>
 			<span>&gt;</span>
 			List Users
 		</div>
@@ -169,11 +147,11 @@
 					<!-- End Box Head-->
 					
 					<div class="box-content">
+					<h:form>
 					<p:panel rendered="#{request.isUserInRole('ROLE_ADMIN')}">
-						<h:outputLink styleClass="add-button" id="loginLink" value="javascript:void(0)" onclick="dlg.show()" title="login">  
+						<h:outputLink styleClass="add-button" id="openRegisterUser" value="javascript:void(0)" onclick="dlg.show()">
 							<span>Add new User</span>
-						</h:outputLink> 
-						
+						</h:outputLink>  
 						<div class="cl">&nbsp;</div>
 						
 						<p class="select-all">
@@ -182,7 +160,7 @@
 						<p><a href="#">Delete Selected</a></p>
 						
 						<p:dialog id="dialog" header="Login" widgetVar="dlg">
-						<h:form>
+						
 							 <h:panelGrid id="display" columns="3" cellpadding="4">  
 					  
 					            <h:outputText value="User Name " />  
@@ -229,7 +207,7 @@
 								</f:facet>
 					        </h:panelGrid>  
 							
-						 </h:form>
+						
 						 </p:dialog>
 					
 					<script type="text/javascript">
@@ -243,10 +221,13 @@
 						}
 					</script>
 					</p:panel>
-						<div class="cl">&nbsp;</div>
+					</h:form>
+					<div class="cl">&nbsp;</div>
 						
 					</div>
+					 
 				</div>
+				
 				<!-- End Box -->
 			</div>
 			<!-- End Sidebar -->

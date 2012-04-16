@@ -27,24 +27,26 @@
 		<div id="main">
 				<!-- Box -->
 				<div class="box" style=" margin: auto; width: 400px;">
+					
 					<!-- Box Head -->
 					<div class="box-head">
 						<h2>Login</h2>
 					</div>
 					<!-- End Box Head -->
 
-					<h:form prependId="false">
+					<h:form id="formLogin" prependId="false">
 					<!-- Form -->
 						<div class="form">
+								<p><p:message  for="formLogin" />  </p>
 								<p>
 									<label>User Name <span>(Required Field)</span></label>
 									<h:inputText id="j_username" label="User Name" value="#{loginBean.userName}"  required="true" class="field size1" style=" width: 96%;" />
-									<label><h:message styleClass="msg-error" for="j_username" /></label>
+									<label><p:message  for="j_username" /></label>
 								</p>
 								<p>
 									<label>Password <span>(Required Field)</span></label>
 									<h:inputSecret id="j_password" label="Password" value="#{loginBean.password}" required="true" class="field size1" style=" width: 96%;" />
-									<label><h:message styleClass="msg-error" for="j_password" /></label>
+									<label><p:message  for="j_password" /></label>
 								</p> 
 							
 						</div>
@@ -52,9 +54,11 @@
 						
 						<!-- Form Buttons -->
 						<div class="buttons">
-							<h:commandButton class="button"  type="submit" id="login"   action="#{loginBean.login}" value="Login" />
+							<p:commandButton   type="submit" id="login"   action="#{loginBean.login}" 
+								value="Login" icon="ui-icon-person" />
 						</div>
 						<!-- End Form Buttons -->
+						<h:inputHidden value="#{loginBean.logoutHidden}" />
 					</h:form>
 				</div>
 				<!-- End Box -->

@@ -8,8 +8,8 @@
 
 <ui:composition>
 	<h:form prependId="false">
-		<p:idleMonitor timeout="4000"   rendered="#{(request.remoteUser != null)}" 
-            onidle="startDialogTimer()" onactive="resetPageTimer()"  />  
+		<p:idleMonitor  timeout="#{session.maxInactiveInterval * 1000 - 60000" rendered="#{(request.remoteUser != null)}"
+            onidle="startIdleMonitor()" onactive="timeoutDialog.hide()"  />  
             
 		<p:dialog 
 				  id="timeoutSession"
@@ -23,7 +23,10 @@
                   closable="false"
                   draggable="false"
                   resizable="false"   
-                  appendToBody="true">              
+                  appendToBody="true"
+                  onHide="stopCount()"
+                  onShow="doTimer()"
+                  >              
           		<br/>
           		<p>
             		<span class="ui-icon ui-icon-alert" style="float:left; margin: 8px 8px 0;"></span>
@@ -33,42 +36,55 @@
             		</p:panel>
           		</p>
           		<br/>
-         		<p style="font-weight: bold;">Move your cursor to continue your session!</p>  
-         		<p:commandButton id="button-autoLogout" value="Logout" style="visibility:hidden;"
-         			action="#{loginBean.logout}"   />          
+         		<p style="font-weight: bold;">Move your cursor to continue your session!</p>          
         </p:dialog> 
         
   	</h:form>
-     <script type="text/javascript">
-      var handleDialog = null;
+  	<script type="text/javascript">
 
-      function startDialogTimer() { 
-        timeoutDialog.show(); 
-        var redirectPage = "#{request.contextPath}/logout";
-        var loopTill = 20;
-        var reduce = 1;
-        var countDownDiv = "dialog-countdown";
-        
-        var e = null;
-        if(!e)
-          e = document.getElementById(countDownDiv);
-        e.innerHTML = loopTill;
-        handleDialog = setInterval(function() {
-          if(loopTill == 0) {
-            clearInterval(handleDialog);
-            window.location.href = redirectPage;
-          }
-          else {
-            loopTill -= reduce;
-            e.innerHTML = loopTill;
-          }
-        }, reduce * 1000);
-      }
-      function resetPageTimer()  {
-        timeoutDialog.hide();
-        clearInterval(handleDialog);
-      }            
-     </script>
+	    //jQuery(document).ready(function() {	
+		  var TIME = 6;
+		  var countTimer=TIME;
+		  var processTimer;
+		  var timer_is_on=0;
+		  var redirectPage = "#{request.contextPath}/logout";
+		  
+		  var countDownDiv = "dialog-countdown";
+	      var txtCountDown = null;
+	      if(!txtCountDown)
+	        txtCountDown = document.getElementById(countDownDiv);
+	    //});
+	  
+	    function startIdleMonitor(){
+	        countTimer=TIME;
+	    	txtCountDown.innerHTML = countTimer;
+	    	timeoutDialog.show();
+	    }
+		function timedCount()
+		{
+          txtCountDown.innerHTML = countTimer;
+		  if(countTimer == 0){
+		    stopCount();
+		    window.location.href = redirectPage;
+		    return;
+		  }
+		  countTimer=countTimer-1;
+		  processTimer=setTimeout("timedCount()",1000);
+		}
+		function doTimer()
+		{
+		  if (!timer_is_on){
+		    timer_is_on=1;
+		    timedCount();
+		  }
+		}
+		function stopCount()
+		{
+		  clearTimeout(processTimer);
+		  timer_is_on=0;
+		}
+	</script>
+    
 
     
 </ui:composition>

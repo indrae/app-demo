@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition  template="../../templates/default.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="Sample Web Application" />
+	</ui:define>
+	
+	<ui:define name="headerLogoTopNav">
+		<ui:include src="/templates/includes/header.xhtml" />
+	</ui:define>
+	
+	<ui:define name="content">
+
+		<!-- Small Nav -->
+		<div class="small-nav">
+			<a href="/pages/profile/profile.xhtml">User Management</a>
+			<span>&gt;</span>
+			My Profile
+		</div>
+		<!-- End Small Nav -->
+		
+		<!-- Main -->
+		<div id="main">
+				<!-- Box -->
+				<div class="box" style=" margin: auto; width: 400px;">
+					
+					<!-- Box Head -->
+					<div class="box-head">
+						<h2>Login</h2>
+					</div>
+					<!-- End Box Head -->
+
+					<h:form id="formUser" prependId="false">
+					<!-- Form -->
+						<div class="form">
+								<p><p:message  for="formUser" />  </p>
+								<p>
+									<label>User Name <span>(Required Field)</span></label>
+									<h:inputText id="username" label="User Name" value="#{profileBean.person.username}"  
+										required="true" class="field size1" style=" width: 96%;" readonly="true" />
+									<label><p:message  for="username" /></label>
+								</p>
+								<p>
+									<label>Email <span>(Required Field)</span></label>
+									<h:inputText id="email" label="Email" value="#{profileBean.person.email}" 
+									required="true" class="field size1" style=" width: 96%;" readonly="true" />
+									<label><p:message  for="email" /></label>
+								</p>
+								<p>
+									<label>First Name <span>(Required Field)</span></label>
+									<h:inputText id="firstName" label="First Name" value="#{profileBean.person.firstName}" required="true" class="field size1" style=" width: 96%;" />
+									<label><p:message  for="firstName" /></label>
+								</p> 
+								<p>
+									<label>Last Name <span>(Required Field)</span></label>
+									<h:inputText id="lastName" label="Last Name" value="#{profileBean.person.lastName}" required="true" class="field size1" style=" width: 96%;" />
+									<label><p:message  for="lastName" /></label>
+								</p> 
+								<p>
+									<label>Civility <span>(Required Field)</span></label>
+									<p:selectOneMenu  id="civility"  value="#{profileBean.person.civility}" effect="fade" >  
+							            <f:selectItems value="#{profileBean.civilityValues}" var="c" 
+    										itemValue="#{c}" itemLabel="#{c.label}"/> 
+							        </p:selectOneMenu>  
+							        <label><p:message  for="civility" /></label>
+									
+								</p>  
+								<p>
+									<label>Birth Date <span>(Required Field)</span></label>
+									<p:calendar value="#{profileBean.person.birthDate}" id="birthDate" showButtonPanel="true"
+										pattern="dd-MM-yyyy HH:mm" readonlyInput="true"/>  
+									<label><p:message  for="birthDate" /></label>
+								</p> 
+							
+						</div>
+						<!-- End Form -->
+						
+						<!-- Form Buttons -->
+						<div class="buttons">
+							<p:commandButton type="submit" id="Update"   
+								actionListener="#{profileBean.updateUser}" value="Update"
+								icon="ui-icon-arrowrefresh-1-w" />
+						</div>
+						<!-- End Form Buttons -->
+					</h:form>
+				</div>
+				<!-- End Box -->
+		
+		</div>
+		<!-- Main -->
+	</ui:define>
+</ui:composition>
+</html>
