@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
+
 import org.primefaces.model.LazyDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,6 +30,7 @@ public class PersonBean implements Serializable {
 	private static final long serialVersionUID = -3323403390205788011L;
 	List<Person> persons = new ArrayList<Person>();
 	Person person = new Person();
+	
 	private LazyDataModel<Person> lazyModel; 
 	
 	private PersonService personService;
@@ -45,7 +48,7 @@ public class PersonBean implements Serializable {
 		lazyModel = new LazyPersonDataModel(persons,personService);
 		//testInsert10k();
 	}
-
+	
 	public void testInsert10k(){
 		System.out.println("PersonBean.testInsert10k()");
 		Long timeStart = Calendar.getInstance().getTimeInMillis();

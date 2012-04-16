@@ -4,10 +4,10 @@ package com.app.demo.web.bean;
 import java.io.Serializable;
 
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -18,6 +18,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.app.demo.domain.Person;
+
 
 @ManagedBean
 @SessionScoped
@@ -25,7 +27,7 @@ import org.springframework.stereotype.Component;
 public class LoginBean  implements Serializable {
 
 	private static final long serialVersionUID = 2868742783741899100L;
-
+	private Person person = new Person();
 	@NotEmpty
     @Size(min = 1, max = 25)
     private String userName;
@@ -43,32 +45,42 @@ public class LoginBean  implements Serializable {
 
     }
 
+    //ActionEvent actionEvent
 	public String login() throws java.io.IOException {
 		try {
             Authentication request = new UsernamePasswordAuthenticationToken(this.getUserName(), getPassword());
             Authentication result = am.authenticate(request);
             SecurityContextHolder.getContext().setAuthentication(result);
-            System.out.println("OK");
+            person = (Person) SecurityContextHolder.getContext().getAuthentication().getDetails();
+            System.out.println("Login Success! ..");
             return "/pages/users";
         } catch (AuthenticationException ex) {
-        	System.out.println("failed");
-            //String loginFailedMessage = FacesUtils.getBundleKey("msg", "login.failed");
-            //FacesUtils.addErrorMessage(loginFailedMessage);
+        	System.out.println("Login Failed");
+        	FacesContext.getCurrentInstance().addMessage("formLogin", new FacesMessage(FacesMessage.SEVERITY_WARN,"Login Failed", "User Name and Password Not Match!"));  
+             
             return "/login";
         }
 	}
-	
+
 	public String logout() {
-		System.out.println("LoginBean.logout()....");
+		//System.out.println("LoginBean.logout()....");
 		SecurityContextHolder.getContext().setAuthentication(null);
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.clear();
 		return "/login";
 	}
 	
-	public void keepAlive(ActionEvent e){
-		System.out.println("LoginBean.keepAlive()");
+	public String getLogoutHidden() {
+		//System.out.println("LoginBean.getLogoutHidden()....");
+		SecurityContextHolder.getContext().setAuthentication(null);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.clear();
+		return "logout";
 	}
+	
+	public void setLogoutHidden(String logoutHidden) {
+	}
+	
 
 	public String getUserName() {
 		return userName;
@@ -84,5 +96,13 @@ public class LoginBean  implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }
