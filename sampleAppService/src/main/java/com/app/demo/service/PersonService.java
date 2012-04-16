@@ -7,6 +7,9 @@
  */
 package com.app.demo.service;
 
+import java.util.List;
+
+import com.app.demo.dao.support.SearchTemplate;
 import com.app.demo.domain.Person;
 import com.app.demo.service.support.GenericEntityService;
 
@@ -53,4 +56,22 @@ public interface PersonService extends GenericEntityService<Person, String> {
      * @param email the unique value
      */
     void deleteByEmail(String email);
+    
+    /**
+     * Load all the Person with Association based on the passed Person and SearchTemplate.
+     *
+     * @param person , searchTemplate 
+     * @return the list of matching entities or an empty list when no entity is found.
+     */
+    public List<Person> findPersonsWithAssociation(Person person,
+			SearchTemplate searchTemplate) ;
+    
+    /**
+     * Return the persistent instance of {@link Person} with the given  property value ,
+     * or null if there is no such persistent instance.
+     *
+     * @param person
+     * @return the corresponding {@link Person} persistent instance or null
+     */
+    public Person getPersonWithAssociation(Person person);
 }

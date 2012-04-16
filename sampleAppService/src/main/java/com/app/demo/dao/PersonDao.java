@@ -7,11 +7,15 @@
  */
 package com.app.demo.dao;
 
+import org.hibernate.Criteria;
+
 import com.app.demo.dao.support.GenericDao;
+import com.app.demo.dao.support.SearchTemplate;
 import com.app.demo.domain.Person;
 
 /**
  * DAO Interface for {@link Person}
  */
 public interface PersonDao extends GenericDao<Person, String> {
+	public Criteria getCriteria(Person person, SearchTemplate searchTemplate);
 }

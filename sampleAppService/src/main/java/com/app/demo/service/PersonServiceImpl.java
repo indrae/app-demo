@@ -7,13 +7,18 @@
  */
 package com.app.demo.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.demo.dao.support.GenericDao;
+import com.app.demo.dao.support.NamedQueryUtil;
+import com.app.demo.dao.support.SearchTemplate;
 import com.app.demo.service.support.GenericEntityServiceImpl;
 import com.app.demo.domain.Person;
 import com.app.demo.dao.PersonDao;
@@ -31,6 +36,9 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
 
     protected PersonDao personDao;
 
+    @Autowired
+    private NamedQueryUtil namedQueryUtil;
+    
     @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
@@ -132,4 +140,33 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
     public void deleteByEmail(String email) {
         delete(getByEmail(email));
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+	@SuppressWarnings("unchecked")
+	public List<Person> findPersonsWithAssociation(Person person,
+			SearchTemplate searchTemplate) {
+		Criteria criteria = personDao.getCriteria(person, searchTemplate);
+		if (criteria != null && criteria.list() != null)
+			return criteria.list();
+		else
+			return null;
+	}
+	
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	@Transactional(readOnly = true)
+	public Person getPersonWithAssociation(Person person){
+    	Criteria criteria = personDao.getCriteria(person, new SearchTemplate().setMaxResults(1));
+		if (criteria != null && criteria.list() != null)
+			return (Person) criteria.list().get(0);
+		else
+			return null;
+		
+	}
 }
