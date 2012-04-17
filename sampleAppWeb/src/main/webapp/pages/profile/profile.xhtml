@@ -21,71 +21,85 @@
 
 		<!-- Small Nav -->
 		<div class="small-nav">
-			<a href="/pages/profile/profile.xhtml">User Management</a>
-			<span>&gt;</span>
-			My Profile
+			Profile Setting<span>&gt;</span>My Profile
 		</div>
 		<!-- End Small Nav -->
 		
 		<!-- Main -->
 		<div id="main">
+			<div class="cl">&nbsp;</div>
+			
+			<!-- Content -->
+			<div id="content">
+			
 				<!-- Box -->
-				<div class="box" style=" margin: auto; width: 400px;">
+				<div class="box">
 					
 					<!-- Box Head -->
 					<div class="box-head">
-						<h2>Login</h2>
+						<h2>My Profile</h2>
 					</div>
 					<!-- End Box Head -->
 
 					<h:form id="formUser" prependId="false">
 					<!-- Form -->
 						<div class="form">
-								<p><p:message  for="formUser" />  </p>
-								<p>
-									<label>User Name <span>(Required Field)</span></label>
-									<h:inputText id="username" label="User Name" value="#{profileBean.person.username}"  
-										required="true" class="field size1" style=" width: 96%;" readonly="true" />
-									<label><p:message  for="username" /></label>
-								</p>
-								<p>
-									<label>Email <span>(Required Field)</span></label>
-									<h:inputText id="email" label="Email" value="#{profileBean.person.email}" 
-									required="true" class="field size1" style=" width: 96%;" readonly="true" />
-									<label><p:message  for="email" /></label>
-								</p>
-								<p>
-									<label>First Name <span>(Required Field)</span></label>
-									<h:inputText id="firstName" label="First Name" value="#{profileBean.person.firstName}" required="true" class="field size1" style=" width: 96%;" />
-									<label><p:message  for="firstName" /></label>
-								</p> 
-								<p>
-									<label>Last Name <span>(Required Field)</span></label>
-									<h:inputText id="lastName" label="Last Name" value="#{profileBean.person.lastName}" required="true" class="field size1" style=" width: 96%;" />
-									<label><p:message  for="lastName" /></label>
-								</p> 
-								<p>
-									<label>Civility <span>(Required Field)</span></label>
-									<p:selectOneMenu  id="civility"  value="#{profileBean.person.civility}" effect="fade" >  
+								<p:message  for="formUser" />
+								<h:panelGrid width="100%"  id="display" columns="4" cellpadding="10"  
+								cellspacing="10"  >  
+					  
+					            <h:outputText value="User Name " />  
+					            <h:outputText value=" : " />  
+					            <p:inputText style="width:200px;" value="#{profileBean.person.username}" id="username" readonly="true"/>  
+					  			<p:message  for="username" />
+					  			
+					  			<h:outputText value="Email" /> 
+					            <h:outputText value=" : " /> 
+					            <p:inputText style="width:200px;" value="#{profileBean.person.email}" id="email" readonly="true"/>  
+					            <p:message  for="email" />
+					            
+					  			<h:outputText value="First Name "  /> 
+					  			<h:outputText value=" : " /> 
+					            <p:inputText style="width:200px;" value="#{profileBean.person.firstName}" id="firstName"/>
+					            <p:message  for="firstName" />
+					           
+					            <h:outputText value="Last Name " />  
+					            <h:outputText value=" : " />
+					            <p:inputText  style="width:200px;" value="#{profileBean.person.lastName}" id="lastName"/>
+					            <p:message  for="lastName" />
+					            
+					            <h:outputText value="Civility " />  
+					            <h:outputText value=" : " />
+					            <p:selectOneMenu  style="width:200px;"  id="civility"  value="#{profileBean.person.civility}" effect="fade" >  
 							            <f:selectItems value="#{profileBean.civilityValues}" var="c" 
     										itemValue="#{c}" itemLabel="#{c.label}"/> 
-							        </p:selectOneMenu>  
-							        <label><p:message  for="civility" /></label>
-									
-								</p>  
-								<p>
-									<label>Birth Date <span>(Required Field)</span></label>
-									<p:calendar value="#{profileBean.person.birthDate}" id="birthDate" showButtonPanel="true"
-										pattern="dd-MM-yyyy HH:mm" readonlyInput="true"/>  
-									<label><p:message  for="birthDate" /></label>
-								</p> 
+							        </p:selectOneMenu> 
+					  			<p:message  for="civility" />
+					            
+					            <h:outputText value="Birth Date " />  
+					            <h:outputText value=" : " />
+					            <p:calendar  style="width:200px;" value="#{profileBean.person.birthDate}" id="birthDate" showButtonPanel="true"
+										pattern="dd-MM-yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"/> 
+					            <p:message  for="birthDate" />
+					            
+					            <h:outputText value="Roles "  /> 
+					  			<h:outputText value=" : " /> 
+					            <p:dataGrid style="width:200px;" value="#{profileBean.person.roles}" var="role" columns="1"
+					            	  id="roles" >
+					            	<p:column>  
+							               <h:outputText value="#{role.roleDesc}" />  
+							        </p:column> 
+					            </p:dataGrid>
+					            <p:message  for="roles" />
+					            
+					        </h:panelGrid>  
 							
 						</div>
 						<!-- End Form -->
 						
 						<!-- Form Buttons -->
 						<div class="buttons">
-							<p:commandButton type="submit" id="Update"   
+							<p:commandButton type="submit" id="Update"   style="margin-right: 20px;"
 								actionListener="#{profileBean.updateUser}" value="Update"
 								icon="ui-icon-arrowrefresh-1-w" />
 						</div>
@@ -93,7 +107,18 @@
 					</h:form>
 				</div>
 				<!-- End Box -->
-		
+				
+			</div>
+			<!-- End Content -->
+			
+			<!-- Sidebar -->
+			<div id="sidebar">
+				<ui:include src="/pages/profile/includes/sidebar.xhtml" />
+			</div>
+			<!-- End Sidebar -->
+			
+			<div class="cl">&nbsp;</div>	
+			
 		</div>
 		<!-- Main -->
 	</ui:define>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<!-- Box -->
+	<div class="box">
+		
+		<!-- Box Head -->
+		<div class="box-head">
+			<h2>Management</h2>
+		</div>
+		<!-- End Box Head-->
+		
+		<div class="box-content">
+		<h:form>
+		<p:panel><div class="cl">&nbsp;</div> 
+			<p:commandButton type="submit"   style="width: 173px;"
+					action="#{profileBean.linkProfile}" value="My Profile"
+					icon="ui-icon-link" />
+			<div class="cl">&nbsp;</div> 
+			<p:commandButton type="submit"   style="width: 173px;"
+					action="#{profileBean.linkChangePassword}" value="Change Password"
+					icon="ui-icon-link" />
+		    <div class="cl">&nbsp;</div> 
+		</p:panel>
+		</h:form>
+		<div class="cl">&nbsp;</div>
+			
+		</div>
+		 
+	</div>
+	
+	<!-- End Box -->
+</ui:composition>
+</html>
