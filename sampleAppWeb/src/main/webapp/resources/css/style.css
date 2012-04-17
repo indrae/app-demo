@@ -28,7 +28,7 @@ a:hover { color:#8d341f; text-decoration: none;}
 .left, .alignleft { float:left; display:inline; }
 .right, .alignright { float:right; display:inline; }
 
-.cl { font-size:0; line-height:0; clear:both; display:block; height:0; }
+.cl { font-size:0; line-height:0; clear:both; display:block; height:5px; }
 
 .al { text-align: left; }
 .ar { text-align: right; }
