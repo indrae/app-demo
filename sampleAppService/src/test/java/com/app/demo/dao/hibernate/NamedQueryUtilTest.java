@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.demo.dao.support.*;
+import com.app.demo.service.PersonService;
 import com.app.demo.util.*;
 import com.app.demo.context.*;
 import com.app.demo.domain.Person;
@@ -33,8 +34,11 @@ public class NamedQueryUtilTest {
 
     @Autowired
     private NamedQueryUtil namedQueryUtil;
+    
+    @Autowired
+    private  PersonService personService;
 
-    @Test
+   // @Test
     @SuppressWarnings("unchecked")
     public void executeQetAllAccountsQueryName() {
         String sqlQuery = "Person.selectAll";
@@ -50,10 +54,15 @@ public class NamedQueryUtilTest {
         }
     }
 
-    @Test
+    //@Test
     @SuppressWarnings("unchecked")
     public void executeGetAllAccountsSqlQuery() {
-        String sqlQuery = "Person.selectAll.native";
+        //String sqlQuery = "Person.selectAll.native";
+    	String sqlQuery = "FROM   Person  p" +
+		" INNER JOIN person_role pr" +
+		" ON pr.person_id = p.id" +
+		" INNER JOIN role r" +
+		" ON r.id = pr.role_id";
         List<Person> accounts = (List<Person>) namedQueryUtil.findByNamedQuery(new SearchTemplate()
                 .setNamedQuery(sqlQuery));
 
@@ -64,5 +73,39 @@ public class NamedQueryUtilTest {
             }
         }
     }
+    
+    //@Test
+    public void executeGetPersonSqlQuery() {
+    	String sqlQuery = "FROM   Person  p" +
+    			" INNER JOIN person_role pr" +
+    			" ON pr.person_id = p.id" +
+    			" INNER JOIN role r" +
+    			" ON r.id = pr.role_id";
+    	SearchTemplate searchTemplate = new SearchTemplate();
+    	searchTemplate.setMaxResults(1);
+    	//searchTemplate.s
+    	
+        Person person = (Person) namedQueryUtil.objectByNamedQuery(searchTemplate, sqlQuery);
+
+        if (person != null) {
+           System.out.println(person.getUsername());
+        }
+        
+    }
+    @Test
+    public void testUserRoles() {
+    	Person person = new Person();
+    	person.setUsername("admin");
+    	//person = personService.getPersonWithAssociation(person);
+    	
+    	SearchTemplate searchTemplate = new SearchTemplate();
+        searchTemplate.setSearchMode(SearchMode.EQUALS);
+        searchTemplate.setCaseSensitive(false);
+    	person = personService.findUniqueOrNone(person, searchTemplate);
+    	System.out.println("size : "+person.getRoles().size());
+    	
+    	
+    }
+    
 
 }

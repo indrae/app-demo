@@ -26,6 +26,7 @@ public class RoleGenerator {
 
         // simple attributes follows
         role.setRoleName(ValueGenerator.getUniqueString(255));
+        role.setRoleDesc(role.getRoleName());
         return role;
     }
 

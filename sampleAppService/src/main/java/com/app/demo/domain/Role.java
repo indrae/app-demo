@@ -30,6 +30,7 @@ public class Role implements Identifiable<Integer>, Serializable {
     // Raw attributes
     private Integer id; // pk
     private String roleName; // unique (not null)
+    private String roleDesc; 
 
     // ---------------------------
     // Constructors
@@ -77,7 +78,19 @@ public class Role implements Identifiable<Integer>, Serializable {
         this.roleName = roleName;
     }
 
-    /**
+    
+    @NotEmpty
+    @Size(max = 255)
+    @Column(name = "role_desc", nullable = false)
+    public String getRoleDesc() {
+		return roleDesc;
+	}
+
+	public void setRoleDesc(String roleDesc) {
+		this.roleDesc = roleDesc;
+	}
+
+	/**
      * Set the default values.
      */
     public void initDefaultValues() {
@@ -138,6 +151,7 @@ public class Role implements Identifiable<Integer>, Serializable {
         StringBuilder result = new StringBuilder();
         result.append("role.id=[").append(getId()).append("]\n");
         result.append("role.roleName=[").append(getRoleName()).append("]\n");
+        result.append("role.roleDesc=[").append(getRoleDesc()).append("]\n");
         return result.toString();
     }
 }

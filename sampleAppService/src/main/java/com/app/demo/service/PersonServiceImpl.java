@@ -81,12 +81,14 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
         }
 
         if (model.isIdSet()) {
+        	model.getRoles().size();
             return super.get(model);
         }
 
         if (model.getUsername() != null && !model.getUsername().isEmpty()) {
             Person result = getByUsername(model.getUsername());
             if (result != null) {
+            	result.getRoles().size();
                 return result;
             }
         }
@@ -94,6 +96,7 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
         if (model.getEmail() != null && !model.getEmail().isEmpty()) {
             Person result = getByEmail(model.getEmail());
             if (result != null) {
+            	result.getRoles().size();
                 return result;
             }
         }
@@ -150,9 +153,12 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
 	public List<Person> findPersonsWithAssociation(Person person,
 			SearchTemplate searchTemplate) {
 		Criteria criteria = personDao.getCriteria(person, searchTemplate);
-		if (criteria != null && criteria.list() != null)
+		if (criteria != null && criteria.list() != null) {
+			for (Person p : (List<Person>)criteria.list()) {
+				p.getRoles().size();
+			}
 			return criteria.list();
-		else
+		} else
 			return null;
 	}
 	
@@ -163,9 +169,11 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
 	@Transactional(readOnly = true)
 	public Person getPersonWithAssociation(Person person){
     	Criteria criteria = personDao.getCriteria(person, new SearchTemplate().setMaxResults(1));
-		if (criteria != null && criteria.list() != null)
-			return (Person) criteria.list().get(0);
-		else
+		if (criteria != null && criteria.list() != null){
+			person = (Person) criteria.list().get(0);
+			person.getRoles().size();
+			return  person;
+		}else
 			return null;
 		
 	}
