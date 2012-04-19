@@ -8,7 +8,21 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition  template="../templates/default.xhtml">
-
+	
+	<ui:define name="head">
+		<style>
+			.ui-datatable .ui-column-filter {
+				width: 200px;
+			}
+			ui-datatable-action{
+			}
+			ui-datatable-action tr td{
+				border: medium none;
+			    padding: 2px;
+			}
+		
+		</style>
+	</ui:define>
 	<ui:define name="title">
 		<h:outputText value="Sample Web Application" />
 	</ui:define>
@@ -35,17 +49,21 @@
 				<!-- Box -->
 				<div class="box">
 					<h:form id="form">
+						<p:growl id="growl" showDetail="true"/>  
+						
 						<p:dataTable var="person" value="#{personBean.lazyModel}"
 							rowKey="#{person.username}" paginator="true" rows="10"
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-							rowsPerPageTemplate="5,10,30,50,100,500"
+							rowsPerPageTemplate="5,10,30,50,100"
 							selection="#{personBean.person}" selectionMode="single"
 							id="personsTable" paginatorPosition="top"
 							widgetVar="personsTable"
 							emptyMessage="No users found with given criteria">
 
-							<p:ajax event="rowSelect" update=":form:display"
-								oncomplete="personDialog.show()"/>
+							<p:ajax event="rowSelect" listener="#{personBean.onRowSelect}" 
+								update="#{(request.isUserInRole('ROLE_ADMIN')) ? ':form:displayEdit' : ':form:display'}" 
+								oncomplete="#{(request.isUserInRole('ROLE_ADMIN')) ? 'personEditDialog.show()' : 'personDialog.show()'}"  />
+							
 							<f:facet name="header">  
 					            <p:outputPanel>  
 					            	<h:outputText value="List of Users" style="float:left; margin-top: 5px;" />  
@@ -57,7 +75,7 @@
   
 							<p:column headerText="User Name" sortBy="#{person.username}"
 								filterBy="#{person.username}" 
-								id="username">  
+								id="username" >  
 					            #{person.username}  
 					        </p:column>
 					        
@@ -67,61 +85,103 @@
 					            #{person.firstName}  
 					        </p:column>
 					        
-					        <p:column headerText="Last Name" sortBy="#{person.lastName}"
-								filterBy="#{person.lastName}"  
-								id="lastName">  
-					            #{person.lastName}  
-					        </p:column>
-
 							<p:column headerText="Email" sortBy="#{person.email}" 
 								filterBy="#{person.email}" 
                 				id="email">  
 					            #{person.email}  
 					        </p:column>
 					        
-					        <p:column headerText="Active" sortBy="#{person.isEnabled}"   
-                				id="active"> #{(person.isEnabled eq "true") ? "Yes" : "No"}  
-					        </p:column>
 						</p:dataTable>
 
 						<p:dialog header="User Detail" widgetVar="personDialog" resizable="false"  
-					              width="380" showEffect="explode" hideEffect="explode" height="150" 
-					             >  
+					              width="500" showEffect="explode" hideEffect="explode" height="300" 
+					               rendered="#{request.isUserInRole('ROLE_USER')}">  
 					  
-					        <h:panelGrid id="display" columns="3" cellpadding="4" >  
+					        <h:panelGrid id="display" columns="3" cellpadding="10"  
+								cellspacing="10"  >  
 					  
 					            <h:outputText value="User Name " />  
 					            <h:outputText value=" : " />  
-					            <h:outputText value="#{personBean.person.username}" id="username"/>  
+					            <h:outputText value="#{personBean.person.username}" />  
 					  			
 					  			<h:outputText value="First Name " /> 
 					  			<h:outputText value=" : " /> 
-					            <h:outputText value="#{personBean.person.firstName}" id="firstName"/>
+					            <h:outputText value="#{personBean.person.firstName}" />
 					           
 					            <h:outputText value="Last Name " />  
 					            <h:outputText value=" : " />
-					            <h:outputText value="#{personBean.person.lastName}" id="lastName"/>
+					            <h:outputText value="#{personBean.person.lastName}" />
 					            
 					            
 					            <h:outputText value="Civility " />  
 					            <h:outputText value=" : " />
-					            <h:outputText value="#{personBean.person.civility.label}" id="civility"/>  
+					            <h:outputText value="#{personBean.person.civility.label}" />  
 					  			
 					            
 					            <h:outputText value="Birth Date " />  
 					            <h:outputText value=" : " />
-					            <h:outputText value="#{personBean.person.birthDate}" id="birthDate"/>  
+					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" 
+										pattern="dd/MM/yyyy"   navigator="true" readonlyInput="true" disabled="true"
+										required="true"/>   
 					            
 					            <h:outputText value="Email" /> 
 					            <h:outputText value=" : " /> 
-					            <h:outputText value="#{personBean.person.email}" id="email"/>  
+					            <h:outputText value="#{personBean.person.email}" />  
 					            
 					            <h:outputText value="Active:" />  
 					            <h:outputText value=" : " />
-					            <h:outputText value='#{(person.isEnabled eq "true") ? "Yes" : "No"}' id="isEnabled" />  
+					            <h:outputText value='#{(personBean.person.isEnabled eq "true") ? "Yes" : "No"}' id="isEnabled" />  
 					            
-					            
+					            <h:outputText value="Roles "  /> 
+					  			<h:outputText value=" : " /> 
+					            <p:dataGrid style="width:200px;" value="#{personBean.person.roles}" var="role" columns="1"
+					            	  id="roles" rendered="#{personBean.person.roles != null}" >
+					            	<p:column>  
+							               <h:outputText value="#{role.roleDesc}" />  
+							        </p:column> 
+					            </p:dataGrid>
 					        </h:panelGrid>  
+					    </p:dialog>  
+					    
+					    <p:dialog header="User Detail" widgetVar="personEditDialog" resizable="false"  
+					             width="500" showEffect="explode" hideEffect="explode" height="350" 
+					             rendered="#{request.isUserInRole('ROLE_ADMIN')}"  >  
+							<h:panelGrid width="100%"  id="displayEdit" columns="4" cellpadding="10"  
+								cellspacing="10"  >  
+					  
+					            <h:outputText value="User Name " />  
+					            <h:outputText value=" : " />  
+					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.username}" id="username" readonly="true"/>  
+					  			<p:message  for="username" />
+					  			
+					  			<h:outputText value="Email" /> 
+					            <h:outputText value=" : " /> 
+					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.email}" id="email" readonly="true"/>  
+					            <p:message  for="email" />
+					            
+					  			<h:outputText value="First Name "  /> 
+					  			<h:outputText value=" : " /> 
+					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.firstName}" id="firstName"/>
+					            <p:message  for="firstName" />
+					           
+					            <h:outputText value="Last Name " />  
+					            <h:outputText value=" : " />
+					            <p:inputText  style="width:200px;  visibility: visible;" value="#{personBean.person.lastName}" id="lastName"/>
+					            <p:message  for="lastName" />
+
+					            <h:outputText value="Birth Date " />  
+					            <h:outputText value=" : " />
+					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" id="birthDate" showButtonPanel="true"
+										pattern="dd/MM/yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"
+										required="true"/> 
+					            <p:message  for="birthDate" />
+								
+								<f:facet name="footer">  
+					                <p:commandButton type="submit" id="Update"   style="margin-right: 20px;"
+										actionListener="#{personBean.updateUser}" value="Update"
+										icon="ui-icon-arrowrefresh-1-w" ajax="false"/>
+					            </f:facet> 
+					       	</h:panelGrid>   
 					    </p:dialog>  
 					</h:form>	
 					

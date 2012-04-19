@@ -83,7 +83,7 @@ public class LazyPersonDataModel extends LazyDataModel<Person> {
         searchTemplate.setMaxResults(first + pageSize);
         searchTemplate.setSearchMode(SearchMode.ANYWHERE);
 
-        datasource = personService.find(p,searchTemplate);
+        datasource = personService.findWithAssociation(p,searchTemplate);
         setRowCount(personService.findCount(p,searchTemplate));
 
         return datasource;

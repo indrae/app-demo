@@ -42,21 +42,15 @@ public class ProfileBean  implements Serializable{
 		person.setUsername(userName);
 		person = personService.getPersonWithAssociation(person);  
 	}
-	
-	public CivilityEnum[] getCivilityValues() {
-	    return CivilityEnum.values();
-   }
 
 	public void updateUser(ActionEvent actionEvent) {
 		System.out.println("ProfileBean.updateUser()");
 		try {
 			person = personService.merge(person);
-			FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Succes", "Your profile updated"));  
+			FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Successfull", "Your profile updated"));  
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_WARN,"Update Failed", "Your profile failed to update!"));   
 		}
-		
-		
 	}
 	
 	public void updatePassword(ActionEvent actionEvent) {

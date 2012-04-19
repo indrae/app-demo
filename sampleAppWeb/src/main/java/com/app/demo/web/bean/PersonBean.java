@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -30,52 +34,67 @@ public class PersonBean implements Serializable {
 	private static final long serialVersionUID = -3323403390205788011L;
 	List<Person> persons = new ArrayList<Person>();
 	Person person = new Person();
-	
-	private LazyDataModel<Person> lazyModel; 
-	
+
+	private LazyDataModel<Person> lazyModel;
+
 	private static PersonService personService;
 	private static RoleService roleService;
 
 	@Autowired
-	public PersonBean(PersonService instance,RoleService instance2) {
+	public PersonBean(PersonService instance, RoleService instance2) {
 		if (personService == null) {
 			personService = instance;
 		}
 		if (roleService == null) {
 			roleService = instance2;
 		}
-		
-		lazyModel = new LazyPersonDataModel(persons,personService);
-		//testInsert();
+
+		lazyModel = new LazyPersonDataModel(persons, personService);
+		// testInsert();
 	}
-	
-	public void testInsert(){
+
+	public void testInsert() {
 		System.out.println("PersonBean.testInsert10k()");
 		Long timeStart = Calendar.getInstance().getTimeInMillis();
-			
-			Role role = roleService.getByRoleName("ROLE_USER");
-	    	for (int i = 10501; i <= 500000; i++) {
-	    		Person per = new Person();
-	    		per.setUsername("sampleUser"+i);
-	    		per.setEmail(ValueGenerator.getUniqueEmail());
-	    		per.setIsEnabled(true);
-	    		per.setCivility(CivilityEnum.MR);
-	    		per.setBirthDate(new Date());
-	    		per.setFirstName("Sample"+i);
-	    		per.setLastName("Last"+i);
-	    		per.setPassword("sample");
-	    		personService.save(per);
-	    		
-	    		per.addRole(role);
-	    		personService.merge(per);
-	    		
-			}
-	    	Long end = Calendar.getInstance().getTimeInMillis();
-	    	Long totalTime = end - timeStart;
-	    	System.out.println(" Total : "+totalTime);
 
-		
+		Role role = roleService.getByRoleName("ROLE_USER");
+		for (int i = 10501; i <= 500000; i++) {
+			Person per = new Person();
+			per.setUsername("sampleUser" + i);
+			per.setEmail(ValueGenerator.getUniqueEmail());
+			per.setIsEnabled(true);
+			per.setCivility(CivilityEnum.MR);
+			per.setBirthDate(new Date());
+			per.setFirstName("Sample" + i);
+			per.setLastName("Last" + i);
+			per.setPassword("sample");
+			personService.save(per);
+
+			per.addRole(role);
+			personService.merge(per);
+
+		}
+		Long end = Calendar.getInstance().getTimeInMillis();
+		Long totalTime = end - timeStart;
+		System.out.println(" Total : " + totalTime);
+
+	}
+
+	public void onRowSelect(SelectEvent event) {  
+		setPerson((Person) event.getObject());
+        /*FacesMessage msg = new FacesMessage("Person Selected", ((Person) event.getObject()).getUsername());  
+  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  */
     }
+	
+	public void updateUser(ActionEvent actionEvent) {
+		try {
+			person = personService.merge(person);
+			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Successfull", "User <b>"+person.getFirstName()+"</b> updated"));  
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN,"Update Failed", "User <b>"+person.getFirstName()+"</b> failed to update!"));   
+		}	
+	}
 	public List<Person> getPersons() {
 		return persons;
 	}
@@ -95,6 +114,5 @@ public class PersonBean implements Serializable {
 	public LazyDataModel<Person> getLazyModel() {
 		return lazyModel;
 	}
-	
-	
+
 }
