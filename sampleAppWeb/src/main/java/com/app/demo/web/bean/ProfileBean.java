@@ -1,5 +1,7 @@
 package com.app.demo.web.bean;
 
+import java.io.Serializable;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -21,7 +23,9 @@ import com.app.demo.service.PersonService;
 @SessionScoped
 @Component
 @Scope("session")
-public class ProfileBean {
+public class ProfileBean  implements Serializable{
+
+	private static final long serialVersionUID = 8401513910942032783L;
 	private Person person = new Person();
 	private String currentPassword;
 	private String newPassword;
@@ -67,16 +71,8 @@ public class ProfileBean {
 			}
 			
 		}else{
-			System.out.println("Current Password Wrong!");
+			FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_WARN,"Update Password Failed", "Your current password wrong!")); 
 		}
-	}
-	
-	public String linkProfile() {
-		return "/pages/profile/profile.xhtml";
-	}
-	
-	public String linkChangePassword() {
-		return "/pages/profile/password.xhtml";
 	}
 	
 	public Person getPerson() {

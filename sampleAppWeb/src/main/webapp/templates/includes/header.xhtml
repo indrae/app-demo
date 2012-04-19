@@ -14,7 +14,7 @@
 			<div id="top-navigation">
 				Welcome <a href="#"><strong><h:outputText value="#{loginBean.userName}" /></strong></a>
 				<span>|</span>
-				<p:commandLink  value="Profile Setting" action="/pages/profile/profile.xhtml"/>
+				<p:commandLink  value="Profile Setting" action="#{tabMenu.profile}"/>
 				<span>|</span>
 				<p:commandLink action="#{loginBean.logout}" value="Logout" />
 			</div>
@@ -24,7 +24,8 @@
 		<!-- Main Nav -->
 		<div id="navigation">
 			<ul>
-			    <li><a href="/pages/users.xhtml" class="active"><span>User Management</span></a></li>
+			    <li><p:commandLink  styleClass='#{(tabMenu.tabIndex == 0) ? "active" : ""}'   action="#{tabMenu.users}"><span>User Management</span></p:commandLink></li>
+			    <li><p:commandLink  styleClass='#{(tabMenu.tabIndex == 1) ? "active" : ""}' action="#{tabMenu.profile}"><span>Profile Setting</span></p:commandLink></li>
 			</ul>
 		</div>
 		<!-- End Main Nav -->

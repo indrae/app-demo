@@ -28,7 +28,7 @@ public class LazyPersonDataModel extends LazyDataModel<Person> {
 	private static final long serialVersionUID = -27891531159872027L;
 	private List<Person> datasource;
 	
-	private PersonService personService;
+	private static PersonService personService;
 	
 	@Autowired
     public LazyPersonDataModel(List<Person> datasource,PersonService instance) {
@@ -55,7 +55,7 @@ public class LazyPersonDataModel extends LazyDataModel<Person> {
 
     @Override
     public List<Person> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,String> filters) {
-
+    	System.out.println("LazyPersonDataModel.load()");
         SearchTemplate searchTemplate = new SearchTemplate();
         
         if (sortField != null && sortOrder != null) {
@@ -65,6 +65,9 @@ public class LazyPersonDataModel extends LazyDataModel<Person> {
         		searchTemplate.addOrderBy(new OrderBy(sortField, OrderByDirection.DESC));
         } 
         
+        for (String s : filters.keySet()) {
+			System.out.println(s);
+		}
         //This will search using where clause "AND"
         if(filters.get("globalFilter") != null && filters.get("globalFilter").length() > 0){
         	filters.put("username", filters.get("globalFilter"));
@@ -75,7 +78,7 @@ public class LazyPersonDataModel extends LazyDataModel<Person> {
         }
         filters.remove("globalFilter");
         Person p = (Person) ObjectMappingUtil.mappingDataObject(new Person(), filters);
-       
+
         searchTemplate.setFirstResult(first);
         searchTemplate.setMaxResults(first + pageSize);
         searchTemplate.setSearchMode(SearchMode.ANYWHERE);

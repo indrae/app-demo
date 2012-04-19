@@ -33,23 +33,23 @@ public class PersonBean implements Serializable {
 	
 	private LazyDataModel<Person> lazyModel; 
 	
-	private PersonService personService;
-	private RoleService roleService;
+	private static PersonService personService;
+	private static RoleService roleService;
 
 	@Autowired
-	public PersonBean(PersonService instance,RoleService roleService) {
+	public PersonBean(PersonService instance,RoleService instance2) {
 		if (personService == null) {
 			personService = instance;
 		}
-		if (this.roleService == null) {
-			this.roleService = roleService;
+		if (roleService == null) {
+			roleService = instance2;
 		}
 		
 		lazyModel = new LazyPersonDataModel(persons,personService);
-		//testInsert10k();
+		//testInsert();
 	}
 	
-	public void testInsert10k(){
+	public void testInsert(){
 		System.out.println("PersonBean.testInsert10k()");
 		Long timeStart = Calendar.getInstance().getTimeInMillis();
 			

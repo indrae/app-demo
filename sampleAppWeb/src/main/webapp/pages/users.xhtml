@@ -45,8 +45,7 @@
 							emptyMessage="No users found with given criteria">
 
 							<p:ajax event="rowSelect" update=":form:display"
-								oncomplete="personDialog.show()" />
-
+								oncomplete="personDialog.show()"/>
 							<f:facet name="header">  
 					            <p:outputPanel>  
 					            	<h:outputText value="List of Users" style="float:left; margin-top: 5px;" />  
@@ -80,16 +79,16 @@
 					            #{person.email}  
 					        </p:column>
 					        
-					        <p:column headerText="Active" sortBy="#{person.isEnabled}" 
-								filterBy="#{person.isEnabled}"  
+					        <p:column headerText="Active" sortBy="#{person.isEnabled}"   
                 				id="active"> #{(person.isEnabled eq "true") ? "Yes" : "No"}  
 					        </p:column>
 						</p:dataTable>
 
 						<p:dialog header="User Detail" widgetVar="personDialog" resizable="false"  
-					              width="380" showEffect="explode" hideEffect="explode" height="150">  
+					              width="380" showEffect="explode" hideEffect="explode" height="150" 
+					             >  
 					  
-					        <h:panelGrid id="display" columns="3" cellpadding="4">  
+					        <h:panelGrid id="display" columns="3" cellpadding="4" >  
 					  
 					            <h:outputText value="User Name " />  
 					            <h:outputText value=" : " />  
