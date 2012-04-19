@@ -177,4 +177,17 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
 			return null;
 		
 	}
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> findWithAssociation(Person person, SearchTemplate searchTemplate){
+    	List<Person> persons =  find(person,searchTemplate);
+    	for (Person p : persons) {
+			p.getRoles().size();
+		}
+    	return persons;
+    }
 }

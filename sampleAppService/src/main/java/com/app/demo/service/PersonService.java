@@ -67,11 +67,13 @@ public interface PersonService extends GenericEntityService<Person, String> {
 			SearchTemplate searchTemplate) ;
     
     /**
-     * Return the persistent instance of {@link Person} with the given  property value ,
-     * or null if there is no such persistent instance.
+     *@Transactional(readOnly=true)
+     *Load all the entities based on the passed exampleOrNamedQueryParameters and SearchTemplate.
      *
-     * @param person
-     * @return the corresponding {@link Person} persistent instance or null
+     * @param person searchTemplate
+     * @return the list of matching entities or an empty list when no entity is found.
      */
     public Person getPersonWithAssociation(Person person);
+    
+    public List<Person> findWithAssociation(Person person, SearchTemplate searchTemplate);
 }
