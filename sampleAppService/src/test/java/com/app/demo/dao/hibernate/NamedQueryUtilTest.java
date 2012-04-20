@@ -38,7 +38,7 @@ public class NamedQueryUtilTest {
     @Autowired
     private  PersonService personService;
 
-   // @Test
+    @Test
     @SuppressWarnings("unchecked")
     public void executeQetAllAccountsQueryName() {
         String sqlQuery = "Person.selectAll";
@@ -92,7 +92,7 @@ public class NamedQueryUtilTest {
         }
         
     }
-    @Test
+   // @Test
     public void testUserRoles() {
     	Person person = new Person();
     	person.setUsername("admin");
