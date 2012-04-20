@@ -146,36 +146,44 @@
 					    <p:dialog header="User Detail" widgetVar="personEditDialog" resizable="false"  
 					             width="500" showEffect="explode" hideEffect="explode" height="350" 
 					             rendered="#{request.isUserInRole('ROLE_ADMIN')}"  >  
-							<h:panelGrid width="100%"  id="displayEdit" columns="4" cellpadding="10"  
+							<h:panelGrid width="100%"  id="displayEdit" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
 					  
 					            <h:outputText value="User Name " />  
 					            <h:outputText value=" : " />  
 					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.username}" id="username" readonly="true"/>  
-					  			<p:message  for="username" />
+					  			
 					  			
 					  			<h:outputText value="Email" /> 
 					            <h:outputText value=" : " /> 
 					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.email}" id="email" readonly="true"/>  
-					            <p:message  for="email" />
+					            
 					            
 					  			<h:outputText value="First Name "  /> 
 					  			<h:outputText value=" : " /> 
 					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.firstName}" id="firstName"/>
-					            <p:message  for="firstName" />
+					           
 					           
 					            <h:outputText value="Last Name " />  
 					            <h:outputText value=" : " />
 					            <p:inputText  style="width:200px;  visibility: visible;" value="#{personBean.person.lastName}" id="lastName"/>
-					            <p:message  for="lastName" />
+					          
 
 					            <h:outputText value="Birth Date " />  
 					            <h:outputText value=" : " />
 					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" id="birthDate" showButtonPanel="true"
 										pattern="dd/MM/yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"
 										required="true"/> 
-					            <p:message  for="birthDate" />
-								
+					           
+					            
+					            <h:outputText value="Roles " />  
+					            <h:outputText value=" : " />
+					            <p:selectManyCheckbox value="#{personBean.person.roles}"   converter="roleConverter" 
+						            layout="pageDirection" >  
+						            <f:selectItems value="#{personBean.listRoles}" var="role" 
+						            	itemValue="#{role}"  itemLabel="#{role.roleDesc}" />  
+						        </p:selectManyCheckbox>  
+														
 								<f:facet name="footer">  
 					                <p:commandButton type="submit" id="Update"   style="margin-right: 20px;"
 										actionListener="#{personBean.updateUser}" value="Update"
