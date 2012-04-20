@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -30,11 +32,14 @@ import com.app.demo.web.test.ValueGenerator;
 @SessionScoped
 @Component
 @Scope("session")
+
 public class PersonBean implements Serializable {
 	private static final long serialVersionUID = -3323403390205788011L;
-	List<Person> persons = new ArrayList<Person>();
-	Person person = new Person();
-
+	private List<Person> persons = new ArrayList<Person>();
+	private Person person = new Person();
+	private static Map<String,String> roles;  
+	private List<String> selectedRoles;  
+	private List<Role> listRoles ;
 	private LazyDataModel<Person> lazyModel;
 
 	private static PersonService personService;
@@ -48,8 +53,18 @@ public class PersonBean implements Serializable {
 		if (roleService == null) {
 			roleService = instance2;
 		}
-
+		
+		if (roles == null) {
+			listRoles = roleService.find();
+			RoleConverter.roles = listRoles;
+			
+			roles =  new HashMap<String, String>();
+			for (Role role : listRoles) {
+				roles.put(role.getRoleName(), role.getRoleDesc());
+			}
+		}
 		lazyModel = new LazyPersonDataModel(persons, personService);
+		
 		// testInsert();
 	}
 
@@ -89,6 +104,9 @@ public class PersonBean implements Serializable {
 	
 	public void updateUser(ActionEvent actionEvent) {
 		try {
+			for (String s : person.getRoleNames()) {
+				System.out.println(" role : "+s);
+			}
 			person = personService.merge(person);
 			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Successfull", "User <b>"+person.getFirstName()+"</b> updated"));  
 		} catch (Exception e) {
@@ -114,5 +132,27 @@ public class PersonBean implements Serializable {
 	public LazyDataModel<Person> getLazyModel() {
 		return lazyModel;
 	}
+
+	public Map<String, String> getRoles() {
+		
+		return roles;
+	}
+
+	public List<String> getSelectedRoles() {
+		return selectedRoles;
+	}
+
+	public void setSelectedRoles(List<String> selectedRoles) {
+		this.selectedRoles = selectedRoles;
+	}
+
+	public List<Role> getListRoles() {
+		return listRoles;
+	}
+
+	public void setListRoles(List<Role> listRoles) {
+		this.listRoles = listRoles;
+	}
+
 
 }
