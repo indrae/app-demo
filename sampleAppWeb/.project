@@ -3,6 +3,7 @@
 	<name>guessnumber</name>
 	<comment></comment>
 	<projects>
+		<project>sampleService</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

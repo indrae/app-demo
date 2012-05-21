@@ -2,11 +2,11 @@ package com.app.demo.web.bean.support;
 
 import java.util.List;
 import java.util.Map;
+
+
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import com.app.demo.dao.support.OrderBy;
 import com.app.demo.dao.support.OrderByDirection;
@@ -21,8 +21,7 @@ import com.app.demo.web.bean.support.util.ObjectMappingUtil;
  * This can make it as Dynamic LazyDataModel. For this moment, create it for Person.
  * Easy more understanding.
  */
-@Component
-@Scope("session")
+
 public class LazyPersonDataModel extends LazyDataModel<Person> {
 
 	private static final long serialVersionUID = -27891531159872027L;
@@ -55,7 +54,7 @@ public class LazyPersonDataModel extends LazyDataModel<Person> {
 
     @Override
     public List<Person> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,String> filters) {
-    	System.out.println("LazyPersonDataModel.load()");
+    	//System.out.println("LazyPersonDataModel.load()");
         SearchTemplate searchTemplate = new SearchTemplate();
         
         if (sortField != null && sortOrder != null) {
@@ -63,11 +62,10 @@ public class LazyPersonDataModel extends LazyDataModel<Person> {
         		searchTemplate.addOrderBy(new OrderBy(sortField, OrderByDirection.ASC));
         	else
         		searchTemplate.addOrderBy(new OrderBy(sortField, OrderByDirection.DESC));
-        } 
+        }else {
+        	//searchTemplate.addOrderBy(new OrderBy(sortField, OrderByDirection.DESC));
+        }
         
-        for (String s : filters.keySet()) {
-			System.out.println(s);
-		}
         //This will search using where clause "AND"
         if(filters.get("globalFilter") != null && filters.get("globalFilter").length() > 0){
         	filters.put("username", filters.get("globalFilter"));

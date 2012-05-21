@@ -1,5 +1,11 @@
 package com.app.demo.web.bean;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,12 +14,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +43,19 @@ import com.app.demo.web.test.ValueGenerator;
 @SessionScoped
 @Component
 @Scope("session")
-
 public class PersonBean implements Serializable {
 	private static final long serialVersionUID = -3323403390205788011L;
 	private List<Person> persons = new ArrayList<Person>();
 	private Person person = new Person();
-	private static Map<String,String> roles;  
-	private List<String> selectedRoles;  
-	private List<Role> listRoles ;
+	private Person personAdd = new Person();
+	private Map<String, String> roles;
+	private List<String> selectedRoles;
 	private LazyDataModel<Person> lazyModel;
-
 	private static PersonService personService;
 	private static RoleService roleService;
 
+	
+	
 	@Autowired
 	public PersonBean(PersonService instance, RoleService instance2) {
 		if (personService == null) {
@@ -53,18 +64,17 @@ public class PersonBean implements Serializable {
 		if (roleService == null) {
 			roleService = instance2;
 		}
-		
+
 		if (roles == null) {
-			listRoles = roleService.find();
-			RoleConverter.roles = listRoles;
-			
-			roles =  new HashMap<String, String>();
+			List<Role> listRoles = roleService.find();
+
+			roles = new HashMap<String, String>();
 			for (Role role : listRoles) {
-				roles.put(role.getRoleName(), role.getRoleDesc());
+				roles.put(role.getRoleName(), role.getRoleName());
 			}
 		}
 		lazyModel = new LazyPersonDataModel(persons, personService);
-		
+
 		// testInsert();
 	}
 
@@ -83,7 +93,7 @@ public class PersonBean implements Serializable {
 			per.setFirstName("Sample" + i);
 			per.setLastName("Last" + i);
 			per.setPassword("sample");
-			personService.save(per);
+			//personService.save(per); 
 
 			per.addRole(role);
 			personService.merge(per);
@@ -95,24 +105,116 @@ public class PersonBean implements Serializable {
 
 	}
 
-	public void onRowSelect(SelectEvent event) {  
+	public void onRowSelect(SelectEvent event) {
 		setPerson((Person) event.getObject());
-        /*FacesMessage msg = new FacesMessage("Person Selected", ((Person) event.getObject()).getUsername());  
-  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  */
-    }
-	
+	}
+
 	public void updateUser(ActionEvent actionEvent) {
 		try {
-			for (String s : person.getRoleNames()) {
-				System.out.println(" role : "+s);
+			personService.save(person);
+			person.setRoles(new ArrayList<Role>());
+			for (String s : selectedRoles) {
+				Role r = roleService.getByRoleName(s);
+				person.addRole(r);
 			}
 			person = personService.merge(person);
-			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Successfull", "User <b>"+person.getFirstName()+"</b> updated"));  
+			FacesContext.getCurrentInstance().addMessage(
+					"form",
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Update Successfull", "User <b>"
+									+ person.getUsername() + "</b> updated"));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("form", new FacesMessage(FacesMessage.SEVERITY_WARN,"Update Failed", "User <b>"+person.getFirstName()+"</b> failed to update!"));   
-		}	
+			FacesContext.getCurrentInstance().addMessage(
+					"form",
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Update Failed", "User <b>" + person.getUsername()
+									+ "</b> failed to update!"));
+		}
 	}
+
+	public void addUser(ActionEvent actionEvent) {
+		try {
+			personAdd.setPassword("12345");
+			if(personService.getByUsername(personAdd.getUsername()) != null){
+				FacesContext.getCurrentInstance().addMessage(
+						"form",
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Register Failed", "User Name <b>"
+										+ personAdd.getUsername()
+										+ "</b> is duplicate!"));
+			}
+			else if(personService.getByEmail(personAdd.getEmail()) != null){
+				FacesContext.getCurrentInstance().addMessage(
+						"form",
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Register Failed", "Email <b>"
+										+ personAdd.getEmail()
+										+ "</b> is duplicate!"));
+			}else {
+				personService.save(personAdd);
+				for (String s : selectedRoles) {
+					Role r = roleService.getByRoleName(s);
+					if (!personAdd.containsRole(r))
+						personAdd.addRole(r);
+				}
+				personService.merge(personAdd);
+				FacesContext.getCurrentInstance()
+						.addMessage(
+								"form",
+								new FacesMessage(FacesMessage.SEVERITY_INFO,
+										"Register Successfull", "User <b>"
+												+ personAdd.getUsername()
+												+ "</b> registered"));
+				personAdd = new Person();
+				selectedRoles = new ArrayList<String>();
+				HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		        session.setAttribute("bytePhoto", null);
+		        System.out.println("PersonBean.addUser() : byte "+session.getAttribute("bytePhoto"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					"form",
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Register Failed", "User <b>"
+									+ personAdd.getUsername()
+									+ "</b> failed to register!"));
+		}
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {  
+        BufferedImage readImage = null;
+        try {
+            // Read from an input stream
+            InputStream is = event.getFile().getInputstream();
+            readImage = ImageIO.read(is);
+//            int h = readImage.getHeight();
+//            int w = readImage.getWidth();  
+//            if(h == 100 &&  w == 100){
+            	FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
+                FacesContext.getCurrentInstance().addMessage("form", msg); 
+                HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+                session.setAttribute("bytePhoto", event.getFile().getContents());
+                
+                if(event.getComponent().getClientId().equalsIgnoreCase("formAdd:uploadPhotoAdd")){
+                	personAdd.setPhoto64(Base64.encodeBase64String(event.getFile().getContents()));
+                }
+                else if(event.getComponent().getClientId().equalsIgnoreCase("form:uploadPhotoEdit")){
+                	person.setPhoto64(Base64.encodeBase64String(event.getFile().getContents()));
+                }
+                
+//            }else{
+//            	FacesMessage msg = new FacesMessage("Failed", event.getFile().getFileName() + "Height and width must be 100px.");  
+//                FacesContext.getCurrentInstance().addMessage("form", msg); 
+//            }
+        } catch (IOException e) {
+        	FacesMessage msg = new FacesMessage("Failed", event.getFile().getFileName() + "is failed to upload");  
+            FacesContext.getCurrentInstance().addMessage("form", msg); 
+        }
+        
+        
+    } 
+	
 	public List<Person> getPersons() {
 		return persons;
 	}
@@ -126,7 +228,19 @@ public class PersonBean implements Serializable {
 	}
 
 	public void setPerson(Person person) {
-		this.person = person;
+		selectedRoles = new ArrayList<String>();
+		if (person != null) {
+			for (String s : person.getRoleNames()) {
+				selectedRoles.add(s);
+			}
+		}
+		
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        if(person != null)
+        	session.setAttribute("bytePhoto", Base64.decodeBase64(person.getPhoto64()));
+        else
+        	session.setAttribute("bytePhoto", Base64.decodeBase64((String)null));	
+        this.person = person;
 	}
 
 	public LazyDataModel<Person> getLazyModel() {
@@ -134,7 +248,6 @@ public class PersonBean implements Serializable {
 	}
 
 	public Map<String, String> getRoles() {
-		
 		return roles;
 	}
 
@@ -146,13 +259,14 @@ public class PersonBean implements Serializable {
 		this.selectedRoles = selectedRoles;
 	}
 
-	public List<Role> getListRoles() {
-		return listRoles;
+	public Person getPersonAdd() {
+		return personAdd;
 	}
 
-	public void setListRoles(List<Role> listRoles) {
-		this.listRoles = listRoles;
+	public void setPersonAdd(Person personAdd) {
+		this.personAdd = personAdd;
 	}
-
+	
+	
 
 }

@@ -12,5 +12,6 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/sampleService"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

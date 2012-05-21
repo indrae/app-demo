@@ -10,13 +10,9 @@ import javax.faces.event.ActionEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import com.app.demo.security.SpringSecurityContext;
-import com.app.demo.dao.support.SearchMode;
-import com.app.demo.dao.support.SearchTemplate;
 import com.app.demo.domain.Person;
-import com.app.demo.domain.enums.CivilityEnum;
 import com.app.demo.service.PersonService;
 
 @ManagedBean
