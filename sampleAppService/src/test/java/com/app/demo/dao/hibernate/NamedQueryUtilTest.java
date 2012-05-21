@@ -92,7 +92,8 @@ public class NamedQueryUtilTest {
         }
         
     }
-   // @Test
+   
+    @Test
     public void testUserRoles() {
     	Person person = new Person();
     	person.setUsername("admin");
@@ -103,6 +104,10 @@ public class NamedQueryUtilTest {
         searchTemplate.setCaseSensitive(false);
     	person = personService.findUniqueOrNone(person, searchTemplate);
     	System.out.println("size : "+person.getRoles().size());
+    	
+    	person.setFirstName("testAdmin");
+    	personService.save(person);
+    	System.out.println("NamedQueryUtilTest.testUserRoles(): completed");
     	
     	
     }

@@ -66,7 +66,11 @@
 			need to use JDBC, please look at hibernate SQL-QUERIES, they would most probably be a more elegant way to solve your problem.
 		</description>
 	</bean>
-
+	
+	<!-- Enable the @AspectJ support -->
+    <aop:aspectj-autoproxy />
+    <bean id="businessProfiler" class="com.app.demo.service.BusinessProfiler" />
+        
 	<!-- jmx -->
 	<context:mbean-server />
 	<context:mbean-export registration="ignoreExisting" default-domain="sampleService" />
@@ -89,8 +93,22 @@
 		p:jpaProperties="classpath:hibernate.properties">
 		<description>Build the entity manager with Hibernate as a provider</description>
 	</bean>
-	<util:property-path id="sessionFactory" path="entityManagerFactory.sessionFactory" />
-
+	<bean id="saveOrUpdateDateListener" class="com.app.demo.dao.hibernate.SaveOrUpdateDateListener" >
+    </bean>
+    <bean id="sessionFactory"  class="org.springframework.orm.jpa.JpaTransactionManager" >
+        <property name="dataSource"><ref bean="dataSource"/></property>
+        <property name="eventListeners">
+            <map>
+                <entry key="save"><ref local="saveOrUpdateDateListener" /></entry>
+                <entry key="save-update"><ref local="saveOrUpdateDateListener" /></entry>
+            </map>
+        </property>
+    </bean>
+	
+	<!-- <util:property-path id="sessionFactory" path="entityManagerFactory.sessionFactory" />
+    <util:map id="saveOrUpdateDateListener" key-type="eventListeners" value-type="save-update"
+    map-class="com.app.demo.dao.hibernate.SaveOrUpdateDateListener" />
+     -->
 	<!-- bean validation -->
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
 		p:validationMessageSource-ref="messageSource">
@@ -107,6 +125,7 @@
 			<list>
 				<!-- main resources -->
 				<value>classpath:localization/application</value>
+				<value>classpath:localization/application</value>
 				<value>classpath:localization/messages</value>
 				<!-- generated domain resources -->
 				<value>classpath:localization/domain-generated/Person</value>
@@ -122,4 +141,5 @@
 			</list>
 		</property>
 	</bean>
+	
 </beans>

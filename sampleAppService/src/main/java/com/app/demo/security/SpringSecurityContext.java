@@ -24,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * Get Spring security context to access user data security infos
  */
+@SuppressWarnings("deprecation")
 public abstract class SpringSecurityContext {
     private static final Logger log = Logger.getLogger(SpringSecurityContext.class);
 
@@ -66,7 +67,8 @@ public abstract class SpringSecurityContext {
     /**
      * Return the current roles bound to the current thread by Spring Security.
      */
-    public static List<String> getRoles() {
+    @SuppressWarnings("unchecked")
+	public static List<String> getRoles() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null) {

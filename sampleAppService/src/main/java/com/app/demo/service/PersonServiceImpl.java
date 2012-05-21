@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.demo.dao.support.GenericDao;
-import com.app.demo.dao.support.NamedQueryUtil;
 import com.app.demo.dao.support.SearchTemplate;
 import com.app.demo.service.support.GenericEntityServiceImpl;
 import com.app.demo.domain.Person;
@@ -35,9 +34,6 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
     private static final Logger log = Logger.getLogger(PersonServiceImpl.class);
 
     protected PersonDao personDao;
-
-    @Autowired
-    private NamedQueryUtil namedQueryUtil;
     
     @Autowired
     public void setPersonDao(PersonDao personDao) {

@@ -9,7 +9,6 @@ package com.app.demo.domain;
 
 import javax.xml.bind.annotation.XmlTransient;
 
-import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.TemporalType.TIMESTAMP;
 import static org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE;
@@ -17,6 +16,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -30,7 +31,6 @@ import javax.persistence.QueryHint;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.apache.log4j.Logger;
@@ -41,6 +41,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.ParamDef;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.app.demo.dao.hibernate.AuditableDate;
 import com.app.demo.domain.Role;
 import com.app.demo.domain.enums.CivilityEnum;
 
@@ -52,7 +54,7 @@ import com.app.demo.domain.enums.CivilityEnum;
 @Cache(usage = NONSTRICT_READ_WRITE)
 @FilterDef(name = "myPersonFilter", defaultCondition = "ID = :currentAccountId ", parameters = @ParamDef(name = "currentAccountId", type = "org.hibernate.type.StringType"))
 @Filter(name = "myPersonFilter")
-public class Person implements Identifiable<String>, Serializable {
+public class Person extends Default implements AuditableDate,Identifiable<String>, Serializable {
     private static final long serialVersionUID = 1L;
     private static final Logger log = Logger.getLogger(Person.class);
 
@@ -65,8 +67,8 @@ public class Person implements Identifiable<String>, Serializable {
     private CivilityEnum civility;
     private String firstName;
     private String lastName;
+    private String photo64;
     private Date birthDate; // not null
-    private Integer version;
 
     // Many to many
     private List<Role> roles = new ArrayList<Role>();
@@ -212,9 +214,20 @@ public class Person implements Identifiable<String>, Serializable {
         this.lastName = lastName;
     }
 
-    // -- [birthDate] ------------------------
+    // -- [photo using base64] ------------------------
+    
+    @Column(name = "PHOTO")
+    public String getPhoto64() {
+		return photo64;
+	}
 
-    @NotNull
+	public void setPhoto64(String photo64) {
+		this.photo64 = photo64;
+	}
+
+	// -- [birthDate] ------------------------
+	
+	@NotNull
     @Column(name = "BIRTH_DATE", nullable = false, length = 19)
     @Temporal(TIMESTAMP)
     public Date getBirthDate() {
@@ -223,18 +236,6 @@ public class Person implements Identifiable<String>, Serializable {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    }
-
-    // -- [version] ------------------------
-
-    @Column(name = "VERSION", precision = 10)
-    @Version
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     // --------------------------------------------------------------------
@@ -250,7 +251,7 @@ public class Person implements Identifiable<String>, Serializable {
      */
     @Cache(usage = NONSTRICT_READ_WRITE)
     @JoinTable(name = "person_role", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @ManyToMany(cascade = PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     public List<Role> getRoles() {
         return roles;
     }
@@ -355,8 +356,8 @@ public class Person implements Identifiable<String>, Serializable {
         result.append("person.civility=[").append(getCivility()).append("]\n");
         result.append("person.firstName=[").append(getFirstName()).append("]\n");
         result.append("person.lastName=[").append(getLastName()).append("]\n");
-        result.append("person.birthDate=[").append(getBirthDate()).append("]\n");
-        result.append("person.version=[").append(getVersion()).append("]\n");
+        result.append("person.birthDate=[").append(getBirthDate()).append("]\n"); 
+        result.append("person.photo64=[").append(getPhoto64()).append("]\n");
         return result.toString();
     }
 }
