@@ -9,7 +9,7 @@
 <ui:composition>
 	<h:form prependId="false">
 		<p:idleMonitor  timeout="#{session.maxInactiveInterval * 1000 - 60000}" rendered="#{(request.remoteUser != null)}"
-            onidle="startIdleMonitor()" onactive="timeoutDialog.hide()"  />  
+            onidle="startIdleMonitor()" onactive="timeoutDialog.hide()" />  
             
 		<p:dialog 
 				  id="timeoutSession"

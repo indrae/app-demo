@@ -31,6 +31,15 @@
   <param-name>primefaces.THEME</param-name>
   <param-value>humanity</param-value>
  </context-param>
+ <filter>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name>
+  <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+ </filter>
+ <filter-mapping>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name>
+  <servlet-name>Faces Servlet</servlet-name>
+ </filter-mapping>
+ 
 
 
 <!-- ~~~~~~ 		-->
@@ -63,7 +72,23 @@
 <welcome-file-list>
   <welcome-file>index.xhtml</welcome-file>
 </welcome-file-list>
+
+
+<servlet>
+   <display-name>Photo</display-name>
+   <servlet-name>Photo</servlet-name>
+   <servlet-class>com.app.demo.web.servlet.Photo</servlet-class>
+   <init-param>
+     <param-name>sleep-time-in-seconds</param-name>
+     <param-value>10</param-value>
+   </init-param>
+   <load-on-startup>1</load-on-startup>
+ </servlet>
  
+ <servlet-mapping>
+   <servlet-name>Photo</servlet-name>
+   <url-pattern>/Photo</url-pattern>
+ </servlet-mapping> 
 
 <!-- ~~~~~~   		-->
 <!-- ERROR HANDLE   -->

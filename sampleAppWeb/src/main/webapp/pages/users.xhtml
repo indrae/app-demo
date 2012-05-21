@@ -9,20 +9,6 @@
 
 <ui:composition  template="../templates/default.xhtml">
 	
-	<ui:define name="head">
-		<style>
-			.ui-datatable .ui-column-filter {
-				width: 200px;
-			}
-			ui-datatable-action{
-			}
-			ui-datatable-action tr td{
-				border: medium none;
-			    padding: 2px;
-			}
-		
-		</style>
-	</ui:define>
 	<ui:define name="title">
 		<h:outputText value="Sample Web Application" />
 	</ui:define>
@@ -49,7 +35,7 @@
 				<!-- Box -->
 				<div class="box">
 					<h:form id="form">
-						<p:growl id="growl" showDetail="true"/>  
+						<p:growl id="growl" showDetail="true" life="5000" />  
 						
 						<p:dataTable var="person" value="#{personBean.lazyModel}"
 							rowKey="#{person.username}" paginator="true" rows="10"
@@ -57,11 +43,11 @@
 							rowsPerPageTemplate="5,10,30,50,100"
 							selection="#{personBean.person}" selectionMode="single"
 							id="personsTable" paginatorPosition="top"
-							widgetVar="personsTable"
+							widgetVar="personsTable" 
 							emptyMessage="No users found with given criteria">
 
 							<p:ajax event="rowSelect" listener="#{personBean.onRowSelect}" 
-								update="#{(request.isUserInRole('ROLE_ADMIN')) ? ':form:displayEdit' : ':form:display'}" 
+								update="#{(request.isUserInRole('ROLE_ADMIN')) ? ':form:displayEdit :form:photoEdit' : ':form:display :form:photoView'}" 
 								oncomplete="#{(request.isUserInRole('ROLE_ADMIN')) ? 'personEditDialog.show()' : 'personDialog.show()'}"  />
 							
 							<f:facet name="header">  
@@ -90,13 +76,21 @@
                 				id="email">  
 					            #{person.email}  
 					        </p:column>
-					        
+					        <f:facet name="footer">  
+					            <p:commandButton id="addButton" value="Add User" icon="ui-icon-plus" 
+					                    update=":formAdd:displayAdd" oncomplete="personAddDialog.show()"
+					                    rendered="#{request.isUserInRole('ROLE_ADMIN')}"/>  
+					        </f:facet>  
 						</p:dataTable>
 
 						<p:dialog header="User Detail" widgetVar="personDialog" resizable="false"  
-					              width="500" showEffect="explode" hideEffect="explode" height="300" 
+					              width="500" showEffect="explode" hideEffect="explode" height="400" 
 					               rendered="#{request.isUserInRole('ROLE_USER')}">  
-					  
+					  		<h:panelGrid width="100%"  id="displayViewPhoto" columns="1" cellpadding="10"  
+								cellspacing="10"  >  
+							     <p:graphicImage id="photoView"   cache="false" url="/Photo"
+                   	 				value="/Photo" />  
+							</h:panelGrid>
 					        <h:panelGrid id="display" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
 					  
@@ -111,13 +105,11 @@
 					            <h:outputText value="Last Name " />  
 					            <h:outputText value=" : " />
 					            <h:outputText value="#{personBean.person.lastName}" />
-					            
-					            
+
 					            <h:outputText value="Civility " />  
 					            <h:outputText value=" : " />
 					            <h:outputText value="#{personBean.person.civility.label}" />  
-					  			
-					            
+
 					            <h:outputText value="Birth Date " />  
 					            <h:outputText value=" : " />
 					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" 
@@ -144,8 +136,26 @@
 					    </p:dialog>  
 					    
 					    <p:dialog header="User Detail" widgetVar="personEditDialog" resizable="false"  
-					             width="500" showEffect="explode" hideEffect="explode" height="350" 
+					             width="500" showEffect="explode" hideEffect="explode" height="400" 
 					             rendered="#{request.isUserInRole('ROLE_ADMIN')}"  >  
+							<h:panelGrid width="100%"  id="displayEditPhoto" columns="1" cellpadding="10"  
+								cellspacing="10"  >  
+								<p:fileUpload fileUploadListener="#{personBean.handleFileUpload}" 
+										update=":form:growl :form:photoEdit" 
+							            invalidFileMessage="File type should be (gif|jpg|png) only"
+							            invalidSizeMessage="Size must not exceed 100kb"
+							            mode="advanced"   
+							            sizeLimit="102400"  
+							            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+							            description="Images"
+							            required="true"
+							            requiredMessage="Photo required!" 
+							            id="uploadPhotoEdit"
+							            auto="true"
+							             />  
+							     <p:graphicImage id="photoEdit"   cache="false" url="/Photo"
+                   	 				value="/Photo" />  
+							</h:panelGrid>
 							<h:panelGrid width="100%"  id="displayEdit" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
 					  
@@ -178,10 +188,9 @@
 					            
 					            <h:outputText value="Roles " />  
 					            <h:outputText value=" : " />
-					            <p:selectManyCheckbox value="#{personBean.person.roles}"   converter="roleConverter" 
+					            <p:selectManyCheckbox value="#{personBean.selectedRoles}" 
 						            layout="pageDirection" >  
-						            <f:selectItems value="#{personBean.listRoles}" var="role" 
-						            	itemValue="#{role}"  itemLabel="#{role.roleDesc}" />  
+						            <f:selectItems value="#{personBean.roles}"  />  
 						        </p:selectManyCheckbox>  
 														
 								<f:facet name="footer">  
@@ -190,7 +199,7 @@
 										icon="ui-icon-arrowrefresh-1-w" ajax="false"/>
 					            </f:facet> 
 					       	</h:panelGrid>   
-					    </p:dialog>  
+					    </p:dialog>      
 					</h:form>	
 					
 				</div>
@@ -212,79 +221,78 @@
 					<!-- End Box Head-->
 					
 					<div class="box-content">
-					<h:form>
+					<h:form id="formAdd" enctype="multipart/form-data">
+					
 					<p:panel rendered="#{request.isUserInRole('ROLE_ADMIN')}">
-						<h:outputLink styleClass="add-button" id="openRegisterUser" value="javascript:void(0)" onclick="dlg.show()">
-							<span>Add new User</span>
-						</h:outputLink>  
+						
 						<div class="cl">&nbsp;</div>
 						
-						<p class="select-all">
-							<input type="checkbox" class="checkbox" />
-								<label>select all</label></p>
-						<p><a href="#">Delete Selected</a></p>
-						
-						<p:dialog id="dialog" header="Login" widgetVar="dlg">
-						
-							 <h:panelGrid id="display" columns="3" cellpadding="4">  
-					  
+						<p:dialog header="User Detail" widgetVar="personAddDialog" resizable="true"  
+					             width="500" showEffect="explode" hideEffect="explode" height="400" 
+					             rendered="#{request.isUserInRole('ROLE_ADMIN')}"  >  
+							<h:panelGrid width="100%"  id="displayAddPhoto" columns="1" cellpadding="10"  
+								cellspacing="10"  >  
+								<p:fileUpload fileUploadListener="#{personBean.handleFileUpload}" 
+										update=":form:growl :formAdd:photoAdd" 
+							            invalidFileMessage="File type should be (gif|jpg|png) only"
+							            invalidSizeMessage="Size must not exceed 100kb"
+							            mode="advanced"   
+							            sizeLimit="102400"  
+							            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+							            description="Images"
+							            required="true"
+							            requiredMessage="Photo required!" 
+							            id="uploadPhotoAdd"
+							            auto="true"
+							            />  
+							     <p:graphicImage id="photoAdd"   cache="false" url="/Photo"
+                   	 				value="/Photo" />  
+							</h:panelGrid>
+							<h:panelGrid width="100%"  id="displayAdd" columns="3" cellpadding="10"  
+								cellspacing="10"  >  
+
 					            <h:outputText value="User Name " />  
 					            <h:outputText value=" : " />  
-					            <p:inputText value="#{personBean.person.username}" 
-										id="username" required="true" label="User Name" />
+					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.personAdd.username}" id="usernameAdd" required="true" requiredMessage="User Name Required"/>  
 					  			
-					  			<h:outputText value="First Name " /> 
+					  			
+					  			<h:outputText value="Email" /> 
+					            <h:outputText value=" : " /> 
+					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.personAdd.email}" id="emailAdd" required="true" requiredMessage="Email Required"/>  
+					            
+					            
+					  			<h:outputText value="First Name "  /> 
 					  			<h:outputText value=" : " /> 
-					  			<p:inputText value="#{personBean.person.firstName}" 
-										id="firstName" required="true" label="First Name" />
+					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.personAdd.firstName}" id="firstNameAdd"/>
+					           
 					           
 					            <h:outputText value="Last Name " />  
 					            <h:outputText value=" : " />
-					            <p:inputText value="#{personBean.person.lastName}" 
-										id="lastName" required="true" label="Last Name" />
-					            
-					            
-					            <h:outputText value="Civility " />  
-					            <h:outputText value=" : " />
-					            <p:inputText value="#{personBean.person.civility}" 
-										id="civility" required="true" label="Civility" />
-					  			
-					            
+					            <p:inputText  style="width:200px;  visibility: visible;" value="#{personBean.personAdd.lastName}" id="lastNameAdd" />
+					          
+
 					            <h:outputText value="Birth Date " />  
 					            <h:outputText value=" : " />
-					            <p:inputText value="#{personBean.person.birthDate}" 
-										id="birthDate" required="true" label="Birth Date" /> 
+					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.personAdd.birthDate}" id="birthDateAdd" showButtonPanel="true"
+										pattern="dd/MM/yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"
+										required="true" requiredMessage="Birth Date Required" /> 
+					           
 					            
-					            <h:outputText value="Email" /> 
-					            <h:outputText value=" : " /> 
-					            <p:inputText value="#{personBean.person.email}" 
-										id="email" required="true" label="Email" />
-					            
-					            <h:outputText value="Active:" />  
+					            <h:outputText value="Roles " />  
 					            <h:outputText value=" : " />
-					            <p:inputText value="#{personBean.person.isEnabled}" 
-										id="isEnabled" required="true" label="Active" />
-										
-								<f:facet name="footer">
-									<p:commandButton id="registerButton" value="Register User" 
-										actionListener="#{loginBean.login}" 
-										oncomplete="handleRegisterRequest(xhr, status, args)"/>
-								</f:facet>
-					        </h:panelGrid>  
-							
-						
-						 </p:dialog>
+					            <p:selectManyCheckbox value="#{personBean.selectedRoles}" 
+						            layout="pageDirection" >  
+						            <f:selectItems value="#{personBean.roles}"  />  
+						        </p:selectManyCheckbox>  
+														
+								<f:facet name="footer">  
+									<p:commandButton type="submit" id="Add"   style="margin-right: 20px;"
+										actionListener="#{personBean.addUser}" value="Add User"
+										icon="ui-icon-arrowrefresh-1-w" ajax="false"/>
+					            </f:facet> 
+					       	</h:panelGrid>   
+					    </p:dialog>  
 					
-					<script type="text/javascript">
-						function handleRegisterRequest(xhr, status, args) {
-							if(args.validationFailed || !args.loggedIn) {
-								jQuery('#dialog').effect("shake", { times:3 }, 100);
-							} else {
-								dlg.hide();
-								jQuery('#loginLink').fadeOut();
-							}
-						}
-					</script>
 					</p:panel>
 					</h:form>
 					<div class="cl">&nbsp;</div>
