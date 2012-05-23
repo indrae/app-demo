@@ -21,7 +21,7 @@
 
 		<!-- Small Nav -->
 		<div class="small-nav">
-			Profile Setting<span>&gt;</span>My Profile
+			#{i18n['app.label.breadcrumb.profileSetting']}<span>&gt;</span>#{i18n['app.label.breadcrumb.myProfile']}
 		</div>
 		<!-- End Small Nav -->
 		
@@ -37,7 +37,7 @@
 					
 					<!-- Box Head -->
 					<div class="box-head">
-						<h2>My Profile</h2>
+						<h2>#{i18n['app.label.box.myProfile']}</h2>
 					</div>
 					<!-- End Box Head -->
 
@@ -50,14 +50,15 @@
 								cellspacing="10">  
 								<p:fileUpload fileUploadListener="#{profileBean.handleFileUpload}" 
 										update=":formUser:growl :formUser:photoEdit" 
-							            invalidFileMessage="File type should be (gif|jpg|png) only"
-							            invalidSizeMessage="Size must not exceed 100kb"
+							            invalidFileMessage="#{i18n['app.label.fileUpload.photo.invalidFileMessage']}"
+							            invalidSizeMessage="#{i18n['app.label.fileUpload.photo.invalidSizeMessage']}"
 							            mode="advanced"   
-							            sizeLimit="102400"  
+							            sizeLimit="#{i18n['app.label.fileUpload.photo.sizeLimit']}"  
 							            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-							            description="Images"
+							            description="#{i18n['app.label.fileUpload.photo.description']}"
 							            required="true"
-							            requiredMessage="Photo required!" 
+							            requiredMessage="#{i18n['app.label.fileUpload.photo.requiredMessage']}" 
+							            label="#{i18n['app.label.fileUpload.photo.label']}"
 							            id="uploadPhotoEdit"
 							            auto="true"
 							             />  
@@ -66,27 +67,32 @@
 							<h:panelGrid width="100%"  id="display" columns="4" cellpadding="10"  
 								cellspacing="10"  >  
 					  
-					            <h:outputText value="User Name " />  
+					            <h:outputText value="#{i18n['person.username']}" />  
 					            <h:outputText value=" : " />  
 					            <p:inputText style="width:200px;" value="#{profileBean.person.username}" id="username" readonly="true"/>  
 					  			<p:message  for="username" />
 					  			
-					  			<h:outputText value="Email" /> 
+					  			<h:outputText value="#{i18n['person.email']}" /> 
 					            <h:outputText value=" : " /> 
 					            <p:inputText style="width:200px;" value="#{profileBean.person.email}" id="email" readonly="true"/>  
 					            <p:message  for="email" />
 					            
-					  			<h:outputText value="First Name "  /> 
+					  			<h:outputText value="#{i18n['person.firstName']}"  /> 
 					  			<h:outputText value=" : " /> 
 					            <p:inputText style="width:200px;" value="#{profileBean.person.firstName}" id="firstName"/>
 					            <p:message  for="firstName" />
 					           
-					            <h:outputText value="Last Name " />  
+					            <h:outputText value="#{i18n['person.lastName']}" />  
 					            <h:outputText value=" : " />
 					            <p:inputText  style="width:200px;" value="#{profileBean.person.lastName}" id="lastName"/>
 					            <p:message  for="lastName" />
+					            <h:outputText value="#{i18n['person.birthDate']}" />  
+					            <h:outputText value=" : " />
+					            <p:calendar  style="width:200px;" value="#{profileBean.person.birthDate}" id="birthDate" showButtonPanel="true"
+										pattern="dd-MM-yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"/> 
+					            <p:message  for="birthDate" />
 					            
-					            <h:outputText value="Civility " />  
+					            <h:outputText value="#{i18n['person.civility']}" />  
 					            <h:outputText value=" : " />
 					            <p:selectOneMenu  style="width:200px;"  id="civility"  value="#{profileBean.person.civility}" effect="fade" >  
 							            <f:selectItems value="#{enumObject.civilityValues}" var="c" 
@@ -94,13 +100,7 @@
 							        </p:selectOneMenu> 
 					  			<p:message  for="civility" />
 					            
-					            <h:outputText value="Birth Date " />  
-					            <h:outputText value=" : " />
-					            <p:calendar  style="width:200px;" value="#{profileBean.person.birthDate}" id="birthDate" showButtonPanel="true"
-										pattern="dd-MM-yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"/> 
-					            <p:message  for="birthDate" />
-					            
-					            <h:outputText value="Roles "  /> 
+					            <h:outputText value="#{i18n['roles']}"  /> 
 					  			<h:outputText value=" : " /> 
 					            <p:dataGrid style="width:200px;" value="#{profileBean.person.roles}" var="role" columns="1"
 					            	  id="roles" >
@@ -118,7 +118,7 @@
 						<!-- Form Buttons -->
 						<div class="buttons">
 							<p:commandButton type="submit" id="Update"   style="margin-right: 20px;"
-								actionListener="#{profileBean.updateUser}" value="Update"
+								actionListener="#{profileBean.updateUser}" value="#{i18n['btn.update']}"
 								icon="ui-icon-arrowrefresh-1-w" ajax="false" />
 						</div>
 						<!-- End Form Buttons -->
