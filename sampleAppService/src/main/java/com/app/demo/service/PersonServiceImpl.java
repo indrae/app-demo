@@ -148,8 +148,9 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
 	@SuppressWarnings("unchecked")
 	public List<Person> findPersonsWithAssociation(Person person,
 			SearchTemplate searchTemplate) {
+    	if(person == null) person = new Person();
 		Criteria criteria = personDao.getCriteria(person, searchTemplate);
-		if (criteria != null && criteria.list() != null) {
+		if (criteria != null && criteria.list() != null && criteria.list().size() > 0) {
 			for (Person p : (List<Person>)criteria.list()) {
 				p.getRoles().size();
 			}
@@ -164,8 +165,9 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
     @Override
 	@Transactional(readOnly = true)
 	public Person getPersonWithAssociation(Person person){
+    	if(person == null) person = new Person();
     	Criteria criteria = personDao.getCriteria(person, new SearchTemplate().setMaxResults(1));
-		if (criteria != null && criteria.list() != null){
+		if (criteria != null && criteria.list() != null && criteria.list().size() > 0 ){
 			person = (Person) criteria.list().get(0);
 			person.getRoles().size();
 			return  person;
@@ -180,6 +182,7 @@ public class PersonServiceImpl extends GenericEntityServiceImpl<Person, String> 
     @Override
     @Transactional(readOnly = true)
     public List<Person> findWithAssociation(Person person, SearchTemplate searchTemplate){
+    	if(person == null) person = new Person();
     	List<Person> persons =  find(person,searchTemplate);
     	for (Person p : persons) {
 			p.getRoles().size();
