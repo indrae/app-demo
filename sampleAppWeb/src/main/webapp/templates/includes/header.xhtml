@@ -10,13 +10,14 @@
 	<h:form>
 		<!-- Logo + Top Nav -->
 		<div id="top">
-			<h1><a href="#">SpringTime</a></h1>
+			<h1><a href="index.xhtml">#{i18n['app.label.logo']}</a></h1>
 			<div id="top-navigation">
-				Welcome <a href="#"><strong><h:outputText value="#{loginBean.userName}" /></strong></a>
+				#{i18n['app.label.topNav.welcome']}
+				<strong><p:commandLink  value="#{loginBean.userName}" action="#{tabMenu.profile}"/></strong>
 				<span>|</span>
-				<p:commandLink  value="Profile Setting" action="#{tabMenu.profile}"/>
+				<p:commandLink  value="#{i18n['app.label.topNav.profileSetting']}" action="#{tabMenu.profile}"/>
 				<span>|</span>
-				<p:commandLink action="#{loginBean.logout}" value="Logout" />
+				<p:commandLink action="#{loginBean.logout}" value="#{i18n['app.label.topNav.logout']}" />
 			</div>
 		</div>
 		<!-- End Logo + Top Nav -->
@@ -24,8 +25,8 @@
 		<!-- Main Nav -->
 		<div id="navigation">
 			<ul>
-			    <li><p:commandLink  styleClass='#{(tabMenu.tabIndex == 0) ? "active" : ""}'   action="#{tabMenu.users}"><span>User Management</span></p:commandLink></li>
-			    <li><p:commandLink  styleClass='#{(tabMenu.tabIndex == 1) ? "active" : ""}' action="#{tabMenu.profile}"><span>Profile Setting</span></p:commandLink></li>
+			    <li><p:commandLink  styleClass='#{(tabMenu.tabIndex == 0) ? "active" : ""}'   action="#{tabMenu.users}"><span>#{i18n['app.label.tabNav.userManagement']}</span></p:commandLink></li>
+			    <li><p:commandLink  styleClass='#{(tabMenu.tabIndex == 1) ? "active" : ""}' action="#{tabMenu.profile}"><span>#{i18n['app.label.tabNav.userManagement']}</span></p:commandLink></li>
 			</ul>
 		</div>
 		<!-- End Main Nav -->

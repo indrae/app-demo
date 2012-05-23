@@ -10,7 +10,7 @@
 <ui:composition  template="../templates/default.xhtml">
 	
 	<ui:define name="title">
-		<h:outputText value="Sample Web Application" />
+		<h:outputText value="#{i18n['app.label.title']}" />
 	</ui:define>
 	
 	<ui:define name="headerLogoTopNav">
@@ -21,7 +21,7 @@
 
 		<!-- Small Nav -->
 		<div class="small-nav">
-			User Management<span>&gt;</span>List Users
+			#{i18n['app.label.breadcrumb.userManagement']}<span>&gt;</span>#{i18n['app.label.breadcrumb.listUsers']} 
 		</div>
 		<!-- End Small Nav -->
 		
@@ -44,7 +44,7 @@
 							selection="#{personBean.person}" selectionMode="single"
 							id="personsTable" paginatorPosition="top"
 							widgetVar="personsTable" 
-							emptyMessage="No users found with given criteria">
+							emptyMessage="#{i18n['app.label.table.userNotFound']}">
 
 							<p:ajax event="rowSelect" listener="#{personBean.onRowSelect}" 
 								update="#{(request.isUserInRole('ROLE_ADMIN')) ? ':form:displayEdit :form:photoEdit' : ':form:display :form:photoView'}" 
@@ -55,76 +55,75 @@
 					            	<h:outputText value="List of Users" style="float:left; margin-top: 5px;" />  
 					                <p:inputText  id="globalFilter" onkeyup="personsTable.filter()" 
 					                	style="float:right;width:150px" />  
-					                <h:outputText value="Search all fields:"  style="float:right; margin-top: 5px; margin-right: 5px;" />  
+					                <h:outputText value="#{i18n['app.label.table.searchAllField']}:"  style="float:right; margin-top: 5px; margin-right: 5px;" />  
 					            </p:outputPanel>  
 					        </f:facet>  
   
-							<p:column headerText="User Name" sortBy="#{person.username}"
+							<p:column headerText="#{i18n['person.username']}" sortBy="#{person.username}"
 								filterBy="#{person.username}" 
 								id="username" >  
 					            #{person.username}  
 					        </p:column>
 					        
-					        <p:column headerText="First Name" sortBy="#{person.firstName}"
+					        <p:column headerText="#{i18n['person.firstName']}" sortBy="#{person.firstName}"
 								filterBy="#{person.firstName}"
 								id="firstName">  
 					            #{person.firstName}  
 					        </p:column>
 					        
-							<p:column headerText="Email" sortBy="#{person.email}" 
+							<p:column headerText="#{i18n['person.email']}" sortBy="#{person.email}" 
 								filterBy="#{person.email}" 
                 				id="email">  
 					            #{person.email}  
 					        </p:column>
 					        <f:facet name="footer">  
-					            <p:commandButton id="addButton" value="Add User" icon="ui-icon-plus" 
+					            <p:commandButton id="addButton" value="#{i18n['btn.add']} #{i18n['user']}" icon="ui-icon-plus" 
 					                    update=":formAdd:displayAdd" oncomplete="personAddDialog.show()"
 					                    rendered="#{request.isUserInRole('ROLE_ADMIN')}"/>  
 					        </f:facet>  
 						</p:dataTable>
 
-						<p:dialog header="User Detail" widgetVar="personDialog" resizable="false"  
-					              width="500" showEffect="explode" hideEffect="explode" height="400" 
+						<p:dialog header="#{i18n['app.label.dialog.userTitle']}" widgetVar="personDialog" resizable="false"  
+					              width="500" showEffect="explode" hideEffect="explode" height="500" 
 					               rendered="#{request.isUserInRole('ROLE_USER')}">  
 					  		<h:panelGrid width="100%"  id="displayViewPhoto" columns="1" cellpadding="10"  
 								cellspacing="10"  >  
-							     <p:graphicImage id="photoView"   cache="false" url="/Photo"
-                   	 				value="/Photo" />  
+							     <p:graphicImage id="photoView"   cache="false" url="/Photo" />  
 							</h:panelGrid>
 					        <h:panelGrid id="display" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
 					  
-					            <h:outputText value="User Name " />  
+					            <h:outputText value="#{i18n['person.username']}" />  
 					            <h:outputText value=" : " />  
 					            <h:outputText value="#{personBean.person.username}" />  
 					  			
-					  			<h:outputText value="First Name " /> 
+					  			<h:outputText value="#{i18n['person.firstName']}" /> 
 					  			<h:outputText value=" : " /> 
 					            <h:outputText value="#{personBean.person.firstName}" />
 					           
-					            <h:outputText value="Last Name " />  
+					            <h:outputText value="#{i18n['person.lastName']}" />  
 					            <h:outputText value=" : " />
 					            <h:outputText value="#{personBean.person.lastName}" />
 
-					            <h:outputText value="Civility " />  
+					            <h:outputText value="#{i18n['person.civility']}" />  
 					            <h:outputText value=" : " />
 					            <h:outputText value="#{personBean.person.civility.label}" />  
 
-					            <h:outputText value="Birth Date " />  
+					            <h:outputText value="#{i18n['person.birthDate']}" />  
 					            <h:outputText value=" : " />
 					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" 
 										pattern="dd/MM/yyyy"   navigator="true" readonlyInput="true" disabled="true"
 										required="true"/>   
 					            
-					            <h:outputText value="Email" /> 
+					            <h:outputText value="#{i18n['person.email']}" /> 
 					            <h:outputText value=" : " /> 
 					            <h:outputText value="#{personBean.person.email}" />  
 					            
-					            <h:outputText value="Active:" />  
+					            <h:outputText value="#{i18n['person.isEnabled']}" />  
 					            <h:outputText value=" : " />
-					            <h:outputText value='#{(personBean.person.isEnabled eq "true") ? "Yes" : "No"}' id="isEnabled" />  
+					            <h:outputText value='#{(personBean.person.isEnabled eq "true") ? i18n["YES"] : i18n["NO"] }' id="isEnabled" />  
 					            
-					            <h:outputText value="Roles "  /> 
+					            <h:outputText value="#{i18n['roles']} "  /> 
 					  			<h:outputText value=" : " /> 
 					            <p:dataGrid style="width:200px;" value="#{personBean.person.roles}" var="role" columns="1"
 					            	  id="roles" rendered="#{personBean.person.roles != null}" >
@@ -135,58 +134,63 @@
 					        </h:panelGrid>  
 					    </p:dialog>  
 					    
-					    <p:dialog header="User Detail" widgetVar="personEditDialog" resizable="false"  
-					             width="500" showEffect="explode" hideEffect="explode" height="400" 
+					    <p:dialog header="#{i18n['app.label.dialog.userTitle']}" widgetVar="personEditDialog" resizable="false"  
+					             width="500" showEffect="explode" hideEffect="explode" height="500" 
 					             rendered="#{request.isUserInRole('ROLE_ADMIN')}"  >  
 							<h:panelGrid width="100%"  id="displayEditPhoto" columns="1" cellpadding="10"  
 								cellspacing="10"  >  
 								<p:fileUpload fileUploadListener="#{personBean.handleFileUpload}" 
 										update=":form:growl :form:photoEdit" 
-							            invalidFileMessage="File type should be (gif|jpg|png) only"
-							            invalidSizeMessage="Size must not exceed 100kb"
+							            invalidFileMessage="#{i18n['app.label.fileUpload.photo.invalidFileMessage']}"
+							            invalidSizeMessage="#{i18n['app.label.fileUpload.photo.invalidSizeMessage']}"
 							            mode="advanced"   
-							            sizeLimit="102400"  
+							            sizeLimit="#{i18n['app.label.fileUpload.photo.sizeLimit']}"  
 							            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-							            description="Images"
+							            description="#{i18n['app.label.fileUpload.photo.description']}"
 							            required="true"
-							            requiredMessage="Photo required!" 
+							            requiredMessage="#{i18n['app.label.fileUpload.photo.requiredMessage']}" 
 							            id="uploadPhotoEdit"
 							            auto="true"
 							             />  
-							     <p:graphicImage id="photoEdit"   cache="false" url="/Photo"
-                   	 				value="/Photo" />  
+							     <p:graphicImage id="photoEdit"   cache="false" url="/Photo" />  
 							</h:panelGrid>
 							<h:panelGrid width="100%"  id="displayEdit" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
 					  
-					            <h:outputText value="User Name " />  
+					            <h:outputText value="#{i18n['person.username']}" />  
 					            <h:outputText value=" : " />  
 					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.username}" id="username" readonly="true"/>  
 					  			
 					  			
-					  			<h:outputText value="Email" /> 
+					  			<h:outputText value="#{i18n['person.email']}" /> 
 					            <h:outputText value=" : " /> 
 					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.email}" id="email" readonly="true"/>  
 					            
 					            
-					  			<h:outputText value="First Name "  /> 
+					  			<h:outputText value="#{i18n['person.firstName']}"  /> 
 					  			<h:outputText value=" : " /> 
 					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.firstName}" id="firstName"/>
 					           
 					           
-					            <h:outputText value="Last Name " />  
+					            <h:outputText value="#{i18n['person.lastName']}" />  
 					            <h:outputText value=" : " />
 					            <p:inputText  style="width:200px;  visibility: visible;" value="#{personBean.person.lastName}" id="lastName"/>
 					          
 
-					            <h:outputText value="Birth Date " />  
+					            <h:outputText value="#{i18n['person.birthDate']}" />  
 					            <h:outputText value=" : " />
 					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" id="birthDate" showButtonPanel="true"
 										pattern="dd/MM/yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"
 										required="true"/> 
 					           
-					            
-					            <h:outputText value="Roles " />  
+					            <h:outputText value="#{i18n['person.civility']}" />  
+					            <h:outputText value=" : " />
+					            <p:selectOneMenu  style="width:200px;"  id="civility"  value="#{personBean.person.civility}" effect="fade" >  
+							            <f:selectItems value="#{enumObject.civilityValues}" var="c" 
+    										itemValue="#{c}" itemLabel="#{c.label}"/> 
+							    </p:selectOneMenu> 
+					  			
+					            <h:outputText value="#{i18n['roles']}" />  
 					            <h:outputText value=" : " />
 					            <p:selectManyCheckbox value="#{personBean.selectedRoles}" 
 						            layout="pageDirection" >  
@@ -195,7 +199,7 @@
 														
 								<f:facet name="footer">  
 					                <p:commandButton type="submit" id="Update"   style="margin-right: 20px;"
-										actionListener="#{personBean.updateUser}" value="Update"
+										actionListener="#{personBean.updateUser}" value="#{i18n['btn.update']}"
 										icon="ui-icon-arrowrefresh-1-w" ajax="false"/>
 					            </f:facet> 
 					       	</h:panelGrid>   
@@ -216,7 +220,7 @@
 					
 					<!-- Box Head -->
 					<div class="box-head">
-						<h2>Management</h2>
+						<h2>#{i18n['app.label.box.management']}</h2>
 					</div>
 					<!-- End Box Head-->
 					
@@ -227,58 +231,67 @@
 						
 						<div class="cl">&nbsp;</div>
 						
-						<p:dialog header="User Detail" widgetVar="personAddDialog" resizable="true"  
-					             width="500" showEffect="explode" hideEffect="explode" height="400" 
+						<p:dialog header="#{i18n['app.label.dialog.userTitle']}" widgetVar="personAddDialog" resizable="true"  
+					             width="500" showEffect="explode" hideEffect="explode" height="500" 
 					             rendered="#{request.isUserInRole('ROLE_ADMIN')}"  >  
 							<h:panelGrid width="100%"  id="displayAddPhoto" columns="1" cellpadding="10"  
 								cellspacing="10"  >  
 								<p:fileUpload fileUploadListener="#{personBean.handleFileUpload}" 
 										update=":form:growl :formAdd:photoAdd" 
-							            invalidFileMessage="File type should be (gif|jpg|png) only"
-							            invalidSizeMessage="Size must not exceed 100kb"
+							            invalidFileMessage="#{i18n['app.label.fileUpload.photo.invalidFileMessage']}"
+							            invalidSizeMessage="#{i18n['app.label.fileUpload.photo.invalidSizeMessage']}"
 							            mode="advanced"   
-							            sizeLimit="102400"  
+							            sizeLimit="#{i18n['app.label.fileUpload.photo.sizeLimit']}"  
 							            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-							            description="Images"
+							            description="#{i18n['app.label.fileUpload.photo.description']}"
 							            required="true"
-							            requiredMessage="Photo required!" 
+							            requiredMessage="#{i18n['app.label.fileUpload.photo.requiredMessage']}" 
 							            id="uploadPhotoAdd"
 							            auto="true"
 							            />  
-							     <p:graphicImage id="photoAdd"   cache="false" url="/Photo"
-                   	 				value="/Photo" />  
+							     <p:graphicImage id="photoAdd"   cache="false" url="/Photo" />  
 							</h:panelGrid>
 							<h:panelGrid width="100%"  id="displayAdd" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
 
-					            <h:outputText value="User Name " />  
+					            <h:outputText value="#{i18n['person.username']}" />  
 					            <h:outputText value=" : " />  
-					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.personAdd.username}" id="usernameAdd" required="true" requiredMessage="User Name Required"/>  
+					            <p:inputText style="width:200px;  visibility: visible;" 
+					            	value="#{personBean.personAdd.username}" id="usernameAdd" 
+					            	required="true" requiredMessage="#{i18n['person.username.requiredMessage']}"/>  
 					  			
 					  			
-					  			<h:outputText value="Email" /> 
+					  			<h:outputText value="#{i18n['person.email']}" /> 
 					            <h:outputText value=" : " /> 
-					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.personAdd.email}" id="emailAdd" required="true" requiredMessage="Email Required"/>  
+					            <p:inputText style="width:200px;  visibility: visible;" 
+					            	value="#{personBean.personAdd.email}" id="emailAdd" 
+					            	required="true" requiredMessage="#{i18n['person.email.requiredMessage']}"/>  
 					            
 					            
-					  			<h:outputText value="First Name "  /> 
+					  			<h:outputText value="#{i18n['person.firstName']}"  /> 
 					  			<h:outputText value=" : " /> 
 					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.personAdd.firstName}" id="firstNameAdd"/>
 					           
 					           
-					            <h:outputText value="Last Name " />  
+					            <h:outputText value="#{i18n['person.lastName']}" />  
 					            <h:outputText value=" : " />
 					            <p:inputText  style="width:200px;  visibility: visible;" value="#{personBean.personAdd.lastName}" id="lastNameAdd" />
 					          
 
-					            <h:outputText value="Birth Date " />  
+					            <h:outputText value="#{i18n['person.birthDate']}" />  
 					            <h:outputText value=" : " />
 					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.personAdd.birthDate}" id="birthDateAdd" showButtonPanel="true"
 										pattern="dd/MM/yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"
-										required="true" requiredMessage="Birth Date Required" /> 
+										required="true" requiredMessage="#{i18n['person.birthDate.requiredMessage']}" /> 
 					           
-					            
-					            <h:outputText value="Roles " />  
+					            <h:outputText value="#{i18n['person.civility']}" />  
+					            <h:outputText value=" : " />
+					            <p:selectOneMenu  style="width:200px;"  id="civility"  value="#{personBean.personAdd.civility}" effect="fade" >  
+							            <f:selectItems value="#{enumObject.civilityValues}" var="c" 
+    										itemValue="#{c}" itemLabel="#{c.label}"/> 
+							    </p:selectOneMenu> 
+							    
+					            <h:outputText value="#{i18n['roles']}" />  
 					            <h:outputText value=" : " />
 					            <p:selectManyCheckbox value="#{personBean.selectedRoles}" 
 						            layout="pageDirection" >  
@@ -287,7 +300,7 @@
 														
 								<f:facet name="footer">  
 									<p:commandButton type="submit" id="Add"   style="margin-right: 20px;"
-										actionListener="#{personBean.addUser}" value="Add User"
+										actionListener="#{personBean.addUser}" value="#{i18n['btn.add']} #{i18n['user']}"
 										icon="ui-icon-arrowrefresh-1-w" ajax="false"/>
 					            </f:facet> 
 					       	</h:panelGrid>   

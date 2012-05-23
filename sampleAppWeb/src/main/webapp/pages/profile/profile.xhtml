@@ -41,10 +41,28 @@
 					</div>
 					<!-- End Box Head -->
 
-					<h:form id="formUser" prependId="false">
+					<h:form id="formUser" enctype="multipart/form-data" >
+					<p:growl id="growl" showDetail="true" life="5000" /> 
 					<!-- Form -->
 						<div class="form">
 							<p:message  for="formUser" />
+							<h:panelGrid width="450px"  id="displayEditPhoto" columns="1" cellpadding="10"  
+								cellspacing="10">  
+								<p:fileUpload fileUploadListener="#{profileBean.handleFileUpload}" 
+										update=":formUser:growl :formUser:photoEdit" 
+							            invalidFileMessage="File type should be (gif|jpg|png) only"
+							            invalidSizeMessage="Size must not exceed 100kb"
+							            mode="advanced"   
+							            sizeLimit="102400"  
+							            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+							            description="Images"
+							            required="true"
+							            requiredMessage="Photo required!" 
+							            id="uploadPhotoEdit"
+							            auto="true"
+							             />  
+							     <p:graphicImage  id="photoEdit"  cache="false" url="/Photo?profile" />  
+							</h:panelGrid>
 							<h:panelGrid width="100%"  id="display" columns="4" cellpadding="10"  
 								cellspacing="10"  >  
 					  
@@ -101,7 +119,7 @@
 						<div class="buttons">
 							<p:commandButton type="submit" id="Update"   style="margin-right: 20px;"
 								actionListener="#{profileBean.updateUser}" value="Update"
-								icon="ui-icon-arrowrefresh-1-w" ajax="false"/>
+								icon="ui-icon-arrowrefresh-1-w" ajax="false" />
 						</div>
 						<!-- End Form Buttons -->
 					</h:form>
