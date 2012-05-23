@@ -14,47 +14,58 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.app.demo.domain.Person;
+import com.app.demo.security.SpringSecurityContext;
 import com.app.demo.service.PersonService;
 
 public class Photo extends HttpServlet {
 	private static final long serialVersionUID = 1961456512882456576L;
-	
+
 	@Autowired
-	private  PersonService personService;
-	
-	
+	private PersonService personService;
+
 	@Override
-    public void init(ServletConfig config) throws ServletException {
-        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
-        super.init(config);
-    }
-	
-	
+	public void init(ServletConfig config) throws ServletException {
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				config.getServletContext());
+		super.init(config);
+	}
+
 	// This method is called by the servlet container to process a GET request.
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		//System.out.println("Photo.doGet()");
-		
-		/*Person p = new Person();
-		p.setUsername("admin");
-		p = (Person) personService.findUniqueOrNone(p);
-		System.out.println("Name : "+p.getFirstName());*/
-		
-		HttpSession session = req.getSession();
 
-		byte[] photoByte = (byte[]) session.getAttribute("bytePhoto");
-		//System.out.println("byte : "+photoByte);
-        
-		if(photoByte != null){
+		boolean isProfile = false;
+		if (req.getParameter("profile") != null)
+			isProfile = true;
+
+		if (isProfile) {
+			String userName = SpringSecurityContext.getUsername();
+			Person p = new Person();
+			p.setUsername(userName);
+			p = (Person) personService.findUniqueOrNone(p);
+			byte[] photoByte = (byte[]) Base64.decodeBase64(p.getPhoto64());
+			viewPhoto(req, resp, photoByte);
+		} else {
+			HttpSession session = req.getSession();
+			byte[] photoByte = (byte[]) session.getAttribute("bytePhoto");
+			viewPhoto(req, resp, photoByte);
+		}
+
+	}
+
+	protected void viewPhoto(HttpServletRequest req, HttpServletResponse resp,
+			byte[] photoByte) throws IOException {
+		if (photoByte != null) {
 			resp.setContentType("image/jpeg");
 			resp.setContentLength(photoByte.length);
 			resp.getOutputStream().write(photoByte);
 
-		}else{
+		} else {
 			// Get the absolute path of the image
 			ServletContext sc = getServletContext();
 			String filename = sc.getRealPath("/resources/images/nophoto.jpeg");
@@ -85,11 +96,8 @@ public class Photo extends HttpServlet {
 				out.write(buf, 0, count);
 			}
 			in.close();
-			out.close();	
+			out.close();
 		}
-		
 	}
-	
-	
-	
+
 }

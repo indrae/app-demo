@@ -27,9 +27,8 @@ public class LazyPersonDataModel extends LazyDataModel<Person> {
 	private static final long serialVersionUID = -27891531159872027L;
 	private List<Person> datasource;
 	
-	private static PersonService personService;
-	
-	@Autowired
+	private PersonService personService;
+
     public LazyPersonDataModel(List<Person> datasource,PersonService instance) {
 		if (personService == null) {
 			personService = instance;

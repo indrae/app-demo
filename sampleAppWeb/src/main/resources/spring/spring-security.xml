@@ -12,11 +12,11 @@
 			authentication-failure-url="/login.xhtml"  />
 		<logout  logout-url="/logout"  invalidate-session="true" logout-success-url="/login.xhtml"/>
 		<intercept-url pattern="/pages/*" access="ROLE_ADMIN,ROLE_USER" />
+		<intercept-url pattern="/pages/profile/*" access="ROLE_ADMIN,ROLE_USER" />
 		<intercept-url pattern="/pages/admin/*" access="ROLE_ADMIN" />
-		<anonymous/>	 
-		
 	</http>
-
+	
+	
 	<!-- security -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="accountDetailsService" />

@@ -53,7 +53,7 @@ public class LoginBean  implements Serializable {
             SecurityContextHolder.getContext().setAuthentication(result);
             person = (Person) SecurityContextHolder.getContext().getAuthentication().getDetails();
             System.out.println("Login Success! ..");
-            return "/pages/users";
+            return "/pages/users?faces-redirect=true";
         } catch (AuthenticationException ex) {
         	System.out.println("Login Failed");
         	FacesContext.getCurrentInstance().addMessage("formLogin", new FacesMessage(FacesMessage.SEVERITY_WARN,"Login Failed", "User Name and Password Not Match!"));  

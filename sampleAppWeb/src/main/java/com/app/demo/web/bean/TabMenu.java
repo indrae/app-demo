@@ -12,9 +12,9 @@ public class TabMenu implements Serializable {
 	private static final long serialVersionUID = -2494713580633091828L;
 	private  int tabIndex = 0;
 	
-	private static String PAGE_USER = "/pages/users.xhtml";
-	private static String PAGE_PROFILE = "/pages/profile/profile.xhtml";
-	private static String PAGE_PASSWORD = "/pages/profile/password.xhtml";
+	private static String PAGE_USER = "/pages/users.xhtml?faces-redirect=true";
+	private static String PAGE_PROFILE = "/pages/profile/profile.xhtml?faces-redirect=true";
+	private static String PAGE_PASSWORD = "/pages/profile/password.xhtml?faces-redirect=true";
 	
 
 	public TabMenu() {
