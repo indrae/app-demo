@@ -1,16 +1,14 @@
 package com.app.demo.web.bean;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
@@ -120,5 +118,7 @@ public class ProfileBean  implements Serializable{
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 	}
+
+	
 
 }
