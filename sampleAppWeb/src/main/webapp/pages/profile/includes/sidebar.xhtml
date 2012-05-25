@@ -12,7 +12,7 @@
 		
 		<!-- Box Head -->
 		<div class="box-head">
-			<h2>Management</h2>
+			<h2>#{i18n['app.label.box.management']}</h2>
 		</div>
 		<!-- End Box Head-->
 		
@@ -20,11 +20,11 @@
 		<h:form>
 		<p:panel><div class="cl">&nbsp;</div>  
 			<p:commandButton type="submit"   style="width: 173px;"
-					action="#{tabMenu.profile}" value="My Profile"
+					action="#{tabMenu.profile}" value="#{i18n['btn.myProfile']}"
 					icon="ui-icon-link" />
 			<div class="cl">&nbsp;</div> 
 			<p:commandButton type="submit"   style="width: 173px;"
-					action="#{tabMenu.password}" value="Change Password"
+					action="#{tabMenu.password}" value="#{i18n['btn.changePassword']}"
 					icon="ui-icon-link" />
 		    <div class="cl">&nbsp;</div> 
 		</p:panel>
