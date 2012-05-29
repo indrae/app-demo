@@ -40,10 +40,10 @@
 						<p:dataTable var="person" value="#{personBean.lazyModel}"
 							rowKey="#{person.username}" paginator="true" rows="10"
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-							rowsPerPageTemplate="5,10,30,50,100"
+							rowsPerPageTemplate="5,10,30,50,100" 
 							selection="#{personBean.person}" selectionMode="single"
 							id="personsTable" paginatorPosition="top"
-							widgetVar="personsTable" 
+							widgetVar="personsTable"  lazy="true"
 							emptyMessage="#{i18n['app.label.table.userNotFound']}">
 
 							<p:ajax event="rowSelect" listener="#{personBean.onRowSelect}" 
@@ -182,7 +182,7 @@
 					            <h:outputText value="#{i18n['person.birthDate']}" />  
 					            <h:outputText value=" : " />
 					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" id="birthDate" showButtonPanel="true"
-										pattern="dd/MM/yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"
+										pattern="dd/MM/yyyy"  yearRange="c-50:c+10" navigator="true" readonlyInput="true"
 										required="true" maxdate="#{common.todayDate}" /> 
 					           
 					            <h:outputText value="#{i18n['person.civility']}" />  
