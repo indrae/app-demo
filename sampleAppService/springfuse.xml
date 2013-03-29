@@ -34,7 +34,7 @@
 		<maven-remote-generation-plugin.proxy.ntlm.workstation>yourcomputername</maven-remote-generation-plugin.proxy.ntlm.workstation>
 
 		<!-- We require you to provide an email and a password -->
-		<maven-remote-generation-plugin.email>gshamsul@gmail.com</maven-remote-generation-plugin.email>
+		<maven-remote-generation-plugin.email>xxx@gmail.com</maven-remote-generation-plugin.email>
 		<maven-remote-generation-plugin.password>none</maven-remote-generation-plugin.password>
 	</properties>
 	<build>
