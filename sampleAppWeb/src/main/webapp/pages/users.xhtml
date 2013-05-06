@@ -111,7 +111,7 @@
 
 					            <h:outputText value="#{i18n['person.birthDate']}" />  
 					            <h:outputText value=" : " />
-					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" 
+					            <p:calendar  style="width:200px;  " value="#{personBean.person.birthDate}" 
 										pattern="dd/MM/yyyy"   navigator="true" readonlyInput="true" disabled="true"
 										required="true"/>   
 					            
@@ -152,7 +152,7 @@
 							            label="#{i18n['app.label.fileUpload.photo.label']}"
 							            id="uploadPhotoEdit"
 							            auto="true"
-							            style="visibility: visible;"
+							            style=""
 							             />  
 							     <p:graphicImage id="photoEdit"   cache="false" url="/Photo" />  
 							</h:panelGrid>
@@ -161,40 +161,40 @@
 					  
 					            <h:outputText value="#{i18n['person.username']}" />  
 					            <h:outputText value=" : " />  
-					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.username}" id="username" readonly="true"/>  
+					            <p:inputText style="width:200px;  " value="#{personBean.person.username}" id="username" readonly="true"/>  
 					  			
 					  			
 					  			<h:outputText value="#{i18n['person.email']}" /> 
 					            <h:outputText value=" : " /> 
-					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.email}" id="email" readonly="true"/>  
+					            <p:inputText style="width:200px;  " value="#{personBean.person.email}" id="email" readonly="true"/>  
 					            
 					            
 					  			<h:outputText value="#{i18n['person.firstName']}"  /> 
 					  			<h:outputText value=" : " /> 
-					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.person.firstName}" id="firstName"/>
+					            <p:inputText style="width:200px;  " value="#{personBean.person.firstName}" id="firstName"/>
 					           
 					           
 					            <h:outputText value="#{i18n['person.lastName']}" />  
 					            <h:outputText value=" : " />
-					            <p:inputText  style="width:200px;  visibility: visible;" value="#{personBean.person.lastName}" id="lastName"/>
+					            <p:inputText  style="width:200px;  " value="#{personBean.person.lastName}" id="lastName"/>
 					          
 
 					            <h:outputText value="#{i18n['person.birthDate']}" />  
 					            <h:outputText value=" : " />
-					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.person.birthDate}" id="birthDate" showButtonPanel="true"
+					            <p:calendar  style="width:200px;  " value="#{personBean.person.birthDate}" id="birthDate" showButtonPanel="true"
 										pattern="dd/MM/yyyy"  yearRange="c-50:c+10" navigator="true" readonlyInput="true"
 										required="true" maxdate="#{common.todayDate}" /> 
 					           
 					            <h:outputText value="#{i18n['person.civility']}" />  
 					            <h:outputText value=" : " />
-					            <p:selectOneMenu  style="width:200px; visibility: visible;"  id="civility"  value="#{personBean.person.civility}" effect="fade" >  
+					            <p:selectOneMenu  style="width:200px; "  id="civility"  value="#{personBean.person.civility}" effect="fade" >  
 							            <f:selectItems value="#{enumObject.civilityValues}" var="c" 
     										itemValue="#{c}" itemLabel="#{c.label}"/> 
 							    </p:selectOneMenu> 
 					  			
 					            <h:outputText value="#{i18n['roles']}" />  
 					            <h:outputText value=" : " />
-					            <p:selectManyCheckbox style="width:200px; visibility: visible;" value="#{personBean.selectedRoles}" 
+					            <p:selectManyCheckbox style="width:200px; " value="#{personBean.selectedRoles}" 
 						            layout="pageDirection" >  
 						            <f:selectItems value="#{personBean.roles}"  />  
 						        </p:selectManyCheckbox>  
@@ -251,7 +251,7 @@
 							            label="#{i18n['app.label.fileUpload.photo.label']}"
 							            id="uploadPhotoAdd"
 							            auto="true"
-							            style=" visibility: visible;"
+							            style=" "
 							            />  
 							     <p:graphicImage id="photoAdd"   cache="false" url="/Photo" />  
 							</h:panelGrid>
@@ -260,45 +260,45 @@
 
 					            <h:outputText value="#{i18n['person.username']}" />  
 					            <h:outputText value=" : " />  
-					            <p:inputText style="width:200px;  visibility: visible;" 
+					            <p:inputText style="width:200px;  " 
 					            	value="#{personBean.personAdd.username}" id="usernameAdd" 
 					            	required="true" requiredMessage="#{i18n['person.username.requiredMessage']}"/>  
 					  			
 					  			
 					  			<h:outputText value="#{i18n['person.email']}" /> 
 					            <h:outputText value=" : " /> 
-					            <p:inputText style="width:200px;  visibility: visible;" 
+					            <p:inputText style="width:200px;  " 
 					            	value="#{personBean.personAdd.email}" id="emailAdd" 
 					            	required="true" requiredMessage="#{i18n['person.email.requiredMessage']}"/>  
 					            
 					            
 					  			<h:outputText value="#{i18n['person.firstName']}"  /> 
 					  			<h:outputText value=" : " /> 
-					            <p:inputText style="width:200px;  visibility: visible;" value="#{personBean.personAdd.firstName}" id="firstNameAdd"/>
+					            <p:inputText style="width:200px;  " value="#{personBean.personAdd.firstName}" id="firstNameAdd"/>
 					           
 					           
 					            <h:outputText value="#{i18n['person.lastName']}" />  
 					            <h:outputText value=" : " />
-					            <p:inputText  style="width:200px;  visibility: visible;" value="#{personBean.personAdd.lastName}" id="lastNameAdd" />
+					            <p:inputText  style="width:200px;  " value="#{personBean.personAdd.lastName}" id="lastNameAdd" />
 					          
 
 					            <h:outputText value="#{i18n['person.birthDate']}" />  
 					            <h:outputText value=" : " />
-					            <p:calendar  style="width:200px;  visibility: visible;" value="#{personBean.personAdd.birthDate}" id="birthDateAdd" showButtonPanel="true"
+					            <p:calendar  style="width:200px;  " value="#{personBean.personAdd.birthDate}" id="birthDateAdd" showButtonPanel="true"
 										pattern="dd/MM/yyyy"  yearRange="c-50:c+1" navigator="true" readonlyInput="true"
 										required="true" requiredMessage="#{i18n['person.birthDate.requiredMessage']}" 
 										maxdate="#{common.todayDate}"  /> 
 					           
 					            <h:outputText value="#{i18n['person.civility']}" />  
 					            <h:outputText value=" : " />
-					            <p:selectOneMenu  style="width:200px; visibility: visible;"  id="civility"  value="#{personBean.personAdd.civility}" effect="fade" >  
+					            <p:selectOneMenu  style="width:200px; "  id="civility"  value="#{personBean.personAdd.civility}" effect="fade" >  
 							            <f:selectItems value="#{enumObject.civilityValues}" var="c" 
     										itemValue="#{c}" itemLabel="#{c.label}"/> 
 							    </p:selectOneMenu> 
 							    
 					            <h:outputText value="#{i18n['roles']}" />  
 					            <h:outputText value=" : " />
-					            <p:selectManyCheckbox style="width:200px; visibility: visible;" value="#{personBean.selectedRoles}" 
+					            <p:selectManyCheckbox style="width:200px; " value="#{personBean.selectedRoles}" 
 						            layout="pageDirection" >  
 						            <f:selectItems value="#{personBean.roles}"  />  
 						        </p:selectManyCheckbox>  
