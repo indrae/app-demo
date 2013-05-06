@@ -47,8 +47,8 @@
 							emptyMessage="#{i18n['app.label.table.userNotFound']}">
 
 							<p:ajax event="rowSelect" listener="#{personBean.onRowSelect}" 
-								update="#{(request.isUserInRole('ROLE_ADMIN')) ? ':form:displayEdit :form:photoEdit' : ':form:display :form:photoView'}" 
-								oncomplete="#{(request.isUserInRole('ROLE_ADMIN')) ? 'personEditDialog.show()' : 'personDialog.show()'}"  />
+								update="#{(loginBean.isAdmin) ? ':form:displayEdit :form:photoEdit' : ':form:display :form:photoView'}" 
+								oncomplete="#{(loginBean.isAdmin) ? 'personEditDialog.show()' : 'personDialog.show()'}"  />
 							
 							<f:facet name="header">  
 					            <p:outputPanel>  
@@ -79,13 +79,13 @@
 					        <f:facet name="footer">  
 					            <p:commandButton id="addButton" value="#{i18n['btn.add']} #{i18n['user']}" icon="ui-icon-plus" 
 					                    update=":formAdd:displayAdd" oncomplete="personAddDialog.show()"
-					                    rendered="#{request.isUserInRole('ROLE_ADMIN')}"/>  
+					                    rendered="#{loginBean.isAdmin}"/>  
 					        </f:facet>  
 						</p:dataTable>
 
 						<p:dialog header="#{i18n['app.label.dialog.userTitle']}" widgetVar="personDialog" resizable="false"  
-					              width="500" showEffect="explode" hideEffect="explode" height="500" 
-					               rendered="#{request.isUserInRole('ROLE_USER')}">  
+					              width="500" showEffect="explode" hideEffect="explode" height="530" 
+					               rendered="#{loginBean.isAdmin}">  
 					  		<h:panelGrid width="100%"  id="displayViewPhoto" columns="1" cellpadding="10"  
 								cellspacing="10"  >  
 							     <p:graphicImage id="photoView"   cache="false" url="/Photo" />  
@@ -135,8 +135,8 @@
 					    </p:dialog>  
 					    
 					    <p:dialog header="#{i18n['app.label.dialog.userTitle']}" widgetVar="personEditDialog" resizable="false"  
-					             width="500" showEffect="explode" hideEffect="explode" height="500" 
-					             rendered="#{request.isUserInRole('ROLE_ADMIN')}"  >  
+					             width="500" showEffect="explode" hideEffect="explode" height="530" 
+					             rendered="#{loginBean.isAdmin}"  >  
 							<h:panelGrid width="100%"  id="displayEditPhoto" columns="1" cellpadding="10"  
 								cellspacing="10"  >  
 								<p:fileUpload fileUploadListener="#{personBean.handleFileUpload}" 
@@ -229,13 +229,13 @@
 					<div class="box-content">
 					<h:form id="formAdd" enctype="multipart/form-data">
 					
-					<p:panel rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+					<p:panel rendered="#{loginBean.isAdmin}">
 						
 						<div class="cl">&nbsp;</div>
 						
 						<p:dialog header="#{i18n['app.label.dialog.userTitle']}" widgetVar="personAddDialog" resizable="true"  
 					             width="500" showEffect="explode" hideEffect="explode" height="500" 
-					             rendered="#{request.isUserInRole('ROLE_ADMIN')}"  >  
+					             rendered="#{loginBean.isAdmin}"  >  
 							<h:panelGrid width="100%"  id="displayAddPhoto" columns="1" cellpadding="10"  
 								cellspacing="10"  >  
 								<p:fileUpload fileUploadListener="#{personBean.handleFileUpload}" 
