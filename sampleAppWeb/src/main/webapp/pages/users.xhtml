@@ -125,8 +125,8 @@
 					            
 					            <h:outputText value="#{i18n['roles']} "  /> 
 					  			<h:outputText value=" : " /> 
-					            <p:dataGrid style="width:200px;" value="#{personBean.person.roles}" var="role" columns="1"
-					            	  id="roles" rendered="#{personBean.person.roles != null}" >
+					            <p:dataGrid style="width:200px;" value="#{personBean.person.securityRoles}" var="role" columns="1"
+					            	  id="roles" rendered="#{personBean.person.securityRoles != null}" >
 					            	<p:column>  
 							               <h:outputText value="#{role.roleDesc}" />  
 							        </p:column> 

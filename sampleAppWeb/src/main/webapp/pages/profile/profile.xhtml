@@ -43,6 +43,7 @@
 
 					<h:form id="formUser" enctype="multipart/form-data" >
 					<p:growl id="growl" showDetail="true" life="5000" /> 
+				
 					<!-- Form -->
 						<div class="form">
 							<p:message  for="formUser" />
@@ -54,7 +55,7 @@
 							            invalidSizeMessage="#{i18n['app.label.fileUpload.photo.invalidSizeMessage']}"
 							            mode="advanced"   
 							            sizeLimit="#{i18n['app.label.fileUpload.photo.sizeLimit']}"  
-							            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+							            allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/"
 							            description="#{i18n['app.label.fileUpload.photo.description']}"
 							            required="true"
 							            requiredMessage="#{i18n['app.label.fileUpload.photo.requiredMessage']}" 
@@ -62,7 +63,9 @@
 							            id="uploadPhotoEdit"
 							            auto="true"
 							             />  
-							     <p:graphicImage  id="photoEdit"  cache="false" url="/Photo?profile" />  
+							    
+							     <p:graphicImage  id="photoEdit" cache="true" value="#{profileBean.graphicPhoto}"  /> 
+							     
 							</h:panelGrid>
 							<h:panelGrid width="100%"  id="display" columns="4" cellpadding="10"  
 								cellspacing="10"  >  
@@ -103,7 +106,7 @@
 					            
 					            <h:outputText value="#{i18n['roles']}"  /> 
 					  			<h:outputText value=" : " /> 
-					            <p:dataGrid style="width:200px;" value="#{profileBean.person.roles}" var="role" columns="1"
+					            <p:dataGrid style="width:200px;" value="#{profileBean.person.securityRoles}" var="role" columns="1"
 					            	  id="roles" >
 					            	<p:column>  
 							               <h:outputText value="#{role.roleDesc}" />  

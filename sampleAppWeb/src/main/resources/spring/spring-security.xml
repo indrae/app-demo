@@ -18,10 +18,10 @@
 	
 	
 	<!-- security -->
-	<authentication-manager alias="authenticationManager">
+	<!-- <authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="accountDetailsService" />
 	</authentication-manager>
 	<global-method-security secured-annotations="enabled" jsr250-annotations="enabled" />
-
+ -->
 
 </beans:beans>
