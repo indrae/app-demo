@@ -1,6 +1,7 @@
 package com.app.demo.web.bean;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -16,12 +17,13 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -46,6 +48,8 @@ public class PersonBean implements Serializable {
 	private Person personAdd = new Person();
 	private Map<String, String> roles;
 	private List<String> selectedRoles;
+	private StreamedContent graphicPhoto; 
+	private StreamedContent graphicPhotoAdd;
 	private LazyDataModel<Person> lazyModel;
 	private static PersonRepository personService;
 	private static RoleRepository roleService;
@@ -117,14 +121,14 @@ public class PersonBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(
 					"form",
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Update Successfull", "User <b>"
-									+ person.getUsername() + "</b> updated"));
+							"Update Successful", "User "
+									+ person.getUsername() + " updated"));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					"form",
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Update Failed", "User <b>" + person.getUsername()
-									+ "</b> failed to update!"));
+							"Update Failed", "User " + person.getUsername()
+									+ " failed to update!"));
 		}
 	}
 
@@ -135,17 +139,17 @@ public class PersonBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(
 						"form",
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Register Failed", "User Name <b>"
+								"Register Failed", "User Name "
 										+ personAdd.getUsername()
-										+ "</b> is duplicate!"));
+										+ " is duplicate!"));
 			}
 			else if(personService.getByEmail(personAdd.getEmail()) != null){
 				FacesContext.getCurrentInstance().addMessage(
 						"form",
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Register Failed", "Email <b>"
+								"Register Failed", "Email "
 										+ personAdd.getEmail()
-										+ "</b> is duplicate!"));
+										+ " is duplicate!"));
 			}else {
 				personService.save(personAdd);
 				for (String s : selectedRoles) {
@@ -158,23 +162,20 @@ public class PersonBean implements Serializable {
 						.addMessage(
 								"form",
 								new FacesMessage(FacesMessage.SEVERITY_INFO,
-										"Register Successfull", "User <b>"
+										"Register Successful", "User "
 												+ personAdd.getUsername()
-												+ "</b> registered"));
+												+ " registered"));
 				personAdd = new Person();
 				selectedRoles = new ArrayList<String>();
-				HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		        session.setAttribute("bytePhoto", null);
-		        System.out.println("PersonBean.addUser() : byte "+session.getAttribute("bytePhoto"));
-			}
+		      }
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(
 					"form",
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Register Failed", "User <b>"
+							"Register Failed", "User "
 									+ personAdd.getUsername()
-									+ "</b> failed to register!"));
+									+ " failed to register!"));
 		}
 	}
 
@@ -189,9 +190,7 @@ public class PersonBean implements Serializable {
 //            if(h == 100 &&  w == 100){
             	FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
                 FacesContext.getCurrentInstance().addMessage("form", msg); 
-                HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-                session.setAttribute("bytePhoto", event.getFile().getContents());
-                
+             
                 if(event.getComponent().getClientId().equalsIgnoreCase("formAdd:uploadPhotoAdd")){
                 	personAdd.setPhoto(Base64.encodeBase64String(event.getFile().getContents()));
                 }
@@ -230,12 +229,7 @@ public class PersonBean implements Serializable {
 				selectedRoles.add(s);
 			}
 		}
-		
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        if(person != null)
-        	session.setAttribute("bytePhoto", Base64.decodeBase64(person.getPhoto()));
-        else
-        	session.setAttribute("bytePhoto", Base64.decodeBase64((String)null));	
+			
         this.person = person;
 	}
 
@@ -263,6 +257,29 @@ public class PersonBean implements Serializable {
 		this.personAdd = personAdd;
 	}
 	
+	public StreamedContent getGraphicPhoto() {
+		setImage (person);
+		return graphicPhoto;
+	}
 	
+	public StreamedContent getGraphicPhotoAdd() {
+		setImage (personAdd);
+		return graphicPhoto;
+	}
+	
+	public void setImage (Person person){
+		try {
+			 //Graphic Text  
+			
+			byte[] photo = Base64.decodeBase64(person.getPhoto());
+			
+			 ByteArrayInputStream is = new ByteArrayInputStream(photo) ;
+			 //graphicPhoto = new DefaultStreamedContent(is, "application/pdf", "downloaded_primefaces.pdf");
+			 graphicPhoto = new DefaultStreamedContent(is,null,"photo");
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

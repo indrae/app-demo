@@ -59,16 +59,9 @@ public class ProfileBean  implements Serializable{
 		
 		String userName = UserContext.getUsername();
 		person = personService.getByUsername(userName);
-		setImage();
 	}
 	
 	public void setImage (){
-		/*HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        if(person != null)
-        	session.setAttribute("bytePhoto", Base64.decodeBase64(person.getPhoto()));
-        else
-        	session.setAttribute("bytePhoto", Base64.decodeBase64((String)null));	*/
-		
 		try {
 			 //Graphic Text  
 			
@@ -81,15 +74,13 @@ public class ProfileBean  implements Serializable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		  
-
 	}
 	
 	public void updateUser(ActionEvent actionEvent) {
 		System.out.println("ProfileBean.updateUser()");
 		try {
 			person = personService.merge(person);
-			FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Successfull", "Your profile updated"));  
+			FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Successful", "Your profile updated"));  
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_WARN,"Update Failed", "Your profile failed to update!"));   
 		}
@@ -101,7 +92,7 @@ public class ProfileBean  implements Serializable{
 			person.setPassword(newPassword);
 			try {
 				person = personService.merge(person);
-				FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Password Successfull", "Please re-login"));  
+				FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Password Successful", "Please re-login"));  
 			} catch (Exception e) {
 				FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_WARN,"Update Password Failed", "Your password failed to update!"));   
 			}
