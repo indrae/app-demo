@@ -1,0 +1,849 @@
+[2013-05-07 04:41:51,740] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 04:41:53,210] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 04:41:53,365] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 04:41:54,621] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.386
+[2013-05-07 04:41:55,262] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 04:41:55,266] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:41:55,348] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 04:41:55,349] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:41:55,364] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 04:41:55,365] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_0_,
+        this_.BIRTH_DATE as BIRTH2_0_0_,
+        this_.CIVILITY as CIVILITY0_0_,
+        this_.EMAIL as EMAIL0_0_,
+        this_.FIRST_NAME as FIRST5_0_0_,
+        this_.IS_ENABLED as IS6_0_0_,
+        this_.LAST_NAME as LAST7_0_0_,
+        this_.`PASSWORD` as PASSWORD8_0_0_,
+        this_.PHOTO as PHOTO0_0_,
+        this_.LOGIN as LOGIN0_0_,
+        this_.VERSION as VERSION0_0_ 
+    from
+        person this_ 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 04:43:01,870] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 04:43:02,108] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 04:43:02,125] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 04:43:02,640] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.148
+[2013-05-07 04:43:02,795] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:43:02,795] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 04:43:02,838] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:43:02,838] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 04:43:02,849] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 04:43:02,850] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_0_,
+        this_.BIRTH_DATE as BIRTH2_0_0_,
+        this_.CIVILITY as CIVILITY0_0_,
+        this_.EMAIL as EMAIL0_0_,
+        this_.FIRST_NAME as FIRST5_0_0_,
+        this_.IS_ENABLED as IS6_0_0_,
+        this_.LAST_NAME as LAST7_0_0_,
+        this_.`PASSWORD` as PASSWORD8_0_0_,
+        this_.PHOTO as PHOTO0_0_,
+        this_.LOGIN as LOGIN0_0_,
+        this_.VERSION as VERSION0_0_ 
+    from
+        person this_ 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 04:43:03,117] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* select
+        generatedAlias0 
+    from
+        Person as generatedAlias0 */ select
+            person0_.ID as ID0_,
+            person0_.BIRTH_DATE as BIRTH2_0_,
+            person0_.CIVILITY as CIVILITY0_,
+            person0_.EMAIL as EMAIL0_,
+            person0_.FIRST_NAME as FIRST5_0_,
+            person0_.IS_ENABLED as IS6_0_,
+            person0_.LAST_NAME as LAST7_0_,
+            person0_.`PASSWORD` as PASSWORD8_0_,
+            person0_.PHOTO as PHOTO0_,
+            person0_.LOGIN as LOGIN0_,
+            person0_.VERSION as VERSION0_ 
+        from
+            person person0_ limit ?
+[2013-05-07 04:43:41,109] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 04:43:41,346] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 04:43:41,363] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 04:43:41,844] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.137
+[2013-05-07 04:43:42,011] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 04:43:42,011] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:43:42,051] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:43:42,051] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 04:43:42,066] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 04:43:42,066] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_0_,
+        this_.BIRTH_DATE as BIRTH2_0_0_,
+        this_.CIVILITY as CIVILITY0_0_,
+        this_.EMAIL as EMAIL0_0_,
+        this_.FIRST_NAME as FIRST5_0_0_,
+        this_.IS_ENABLED as IS6_0_0_,
+        this_.LAST_NAME as LAST7_0_0_,
+        this_.`PASSWORD` as PASSWORD8_0_0_,
+        this_.PHOTO as PHOTO0_0_,
+        this_.LOGIN as LOGIN0_0_,
+        this_.VERSION as VERSION0_0_ 
+    from
+        person this_ 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 04:43:42,267] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* select
+        generatedAlias0 
+    from
+        Person as generatedAlias0 
+    where
+        lower(generatedAlias0.firstName) like :param0 */ select
+            person0_.ID as ID0_,
+            person0_.BIRTH_DATE as BIRTH2_0_,
+            person0_.CIVILITY as CIVILITY0_,
+            person0_.EMAIL as EMAIL0_,
+            person0_.FIRST_NAME as FIRST5_0_,
+            person0_.IS_ENABLED as IS6_0_,
+            person0_.LAST_NAME as LAST7_0_,
+            person0_.`PASSWORD` as PASSWORD8_0_,
+            person0_.PHOTO as PHOTO0_,
+            person0_.LOGIN as LOGIN0_,
+            person0_.VERSION as VERSION0_ 
+        from
+            person person0_ 
+        where
+            lower(person0_.FIRST_NAME) like ? limit ?
+[2013-05-07 04:45:32,500] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 04:45:32,745] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 04:45:32,762] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 04:45:33,250] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.138
+[2013-05-07 04:45:33,365] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 04:45:33,365] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:45:33,401] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 04:45:33,401] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:45:33,413] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 04:45:33,413] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_0_,
+        this_.BIRTH_DATE as BIRTH2_0_0_,
+        this_.CIVILITY as CIVILITY0_0_,
+        this_.EMAIL as EMAIL0_0_,
+        this_.FIRST_NAME as FIRST5_0_0_,
+        this_.IS_ENABLED as IS6_0_0_,
+        this_.LAST_NAME as LAST7_0_0_,
+        this_.`PASSWORD` as PASSWORD8_0_0_,
+        this_.PHOTO as PHOTO0_0_,
+        this_.LOGIN as LOGIN0_0_,
+        this_.VERSION as VERSION0_0_ 
+    from
+        person this_ 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 04:45:33,672] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* select
+        generatedAlias0 
+    from
+        Person as generatedAlias0 
+    where
+        lower(generatedAlias0.firstName) like :param0 */ select
+            person0_.ID as ID0_,
+            person0_.BIRTH_DATE as BIRTH2_0_,
+            person0_.CIVILITY as CIVILITY0_,
+            person0_.EMAIL as EMAIL0_,
+            person0_.FIRST_NAME as FIRST5_0_,
+            person0_.IS_ENABLED as IS6_0_,
+            person0_.LAST_NAME as LAST7_0_,
+            person0_.`PASSWORD` as PASSWORD8_0_,
+            person0_.PHOTO as PHOTO0_,
+            person0_.LOGIN as LOGIN0_,
+            person0_.VERSION as VERSION0_ 
+        from
+            person person0_ 
+        where
+            lower(person0_.FIRST_NAME) like ? limit ?
+[2013-05-07 04:46:22,154] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 04:46:22,386] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 04:46:22,406] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 04:46:22,884] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.137
+[2013-05-07 04:46:23,010] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:46:23,010] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 04:46:23,062] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:46:23,062] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 04:46:23,077] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_0_,
+        this_.BIRTH_DATE as BIRTH2_0_0_,
+        this_.CIVILITY as CIVILITY0_0_,
+        this_.EMAIL as EMAIL0_0_,
+        this_.FIRST_NAME as FIRST5_0_0_,
+        this_.IS_ENABLED as IS6_0_0_,
+        this_.LAST_NAME as LAST7_0_0_,
+        this_.`PASSWORD` as PASSWORD8_0_0_,
+        this_.PHOTO as PHOTO0_0_,
+        this_.LOGIN as LOGIN0_0_,
+        this_.VERSION as VERSION0_0_ 
+    from
+        person this_ 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 04:46:23,077] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 04:46:23,326] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* select
+        generatedAlias0 
+    from
+        Person as generatedAlias0 
+    where
+        lower(generatedAlias0.firstName) like :param0 */ select
+            person0_.ID as ID0_,
+            person0_.BIRTH_DATE as BIRTH2_0_,
+            person0_.CIVILITY as CIVILITY0_,
+            person0_.EMAIL as EMAIL0_,
+            person0_.FIRST_NAME as FIRST5_0_,
+            person0_.IS_ENABLED as IS6_0_,
+            person0_.LAST_NAME as LAST7_0_,
+            person0_.`PASSWORD` as PASSWORD8_0_,
+            person0_.PHOTO as PHOTO0_,
+            person0_.LOGIN as LOGIN0_,
+            person0_.VERSION as VERSION0_ 
+        from
+            person person0_ 
+        where
+            lower(person0_.FIRST_NAME) like ? limit ?
+[2013-05-07 04:46:23,331] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 04:47:07,468] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 04:47:07,756] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 04:47:07,773] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 04:47:08,257] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.137
+[2013-05-07 04:47:08,396] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:47:08,396] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 04:47:08,436] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 04:47:08,436] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:47:08,448] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 04:47:08,448] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_0_,
+        this_.BIRTH_DATE as BIRTH2_0_0_,
+        this_.CIVILITY as CIVILITY0_0_,
+        this_.EMAIL as EMAIL0_0_,
+        this_.FIRST_NAME as FIRST5_0_0_,
+        this_.IS_ENABLED as IS6_0_0_,
+        this_.LAST_NAME as LAST7_0_0_,
+        this_.`PASSWORD` as PASSWORD8_0_0_,
+        this_.PHOTO as PHOTO0_0_,
+        this_.LOGIN as LOGIN0_0_,
+        this_.VERSION as VERSION0_0_ 
+    from
+        person this_ 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 04:47:08,671] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* select
+        generatedAlias0 
+    from
+        Person as generatedAlias0 
+    where
+        lower(generatedAlias0.firstName) like :param0 */ select
+            person0_.ID as ID0_,
+            person0_.BIRTH_DATE as BIRTH2_0_,
+            person0_.CIVILITY as CIVILITY0_,
+            person0_.EMAIL as EMAIL0_,
+            person0_.FIRST_NAME as FIRST5_0_,
+            person0_.IS_ENABLED as IS6_0_,
+            person0_.LAST_NAME as LAST7_0_,
+            person0_.`PASSWORD` as PASSWORD8_0_,
+            person0_.PHOTO as PHOTO0_,
+            person0_.LOGIN as LOGIN0_,
+            person0_.VERSION as VERSION0_ 
+        from
+            person person0_ 
+        where
+            lower(person0_.FIRST_NAME) like ? limit ?
+[2013-05-07 04:47:08,687] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 04:52:11,804] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 04:52:12,044] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 04:52:12,061] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 04:52:12,546] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.137
+[2013-05-07 04:52:12,724] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:52:12,724] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 04:52:12,766] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:52:12,766] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 04:52:12,778] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 04:52:12,778] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_1_,
+        this_.BIRTH_DATE as BIRTH2_0_1_,
+        this_.CIVILITY as CIVILITY0_1_,
+        this_.EMAIL as EMAIL0_1_,
+        this_.FIRST_NAME as FIRST5_0_1_,
+        this_.IS_ENABLED as IS6_0_1_,
+        this_.LAST_NAME as LAST7_0_1_,
+        this_.`PASSWORD` as PASSWORD8_0_1_,
+        this_.PHOTO as PHOTO0_1_,
+        this_.LOGIN as LOGIN0_1_,
+        this_.VERSION as VERSION0_1_,
+        securityro2_.PERSON_ID as PERSON1_0_3_,
+        role3_.ID as ROLE2_3_,
+        role3_.ID as ID1_0_,
+        role3_.ROLE_DESC as ROLE2_1_0_,
+        role3_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person this_ 
+    left outer join
+        person_role securityro2_ 
+            on this_.ID=securityro2_.PERSON_ID 
+    left outer join
+        `role` role3_ 
+            on securityro2_.ROLE_ID=role3_.ID 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 04:52:12,957] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* select
+        generatedAlias0 
+    from
+        Person as generatedAlias0 
+    where
+        lower(generatedAlias0.firstName) like :param0 */ select
+            person0_.ID as ID0_,
+            person0_.BIRTH_DATE as BIRTH2_0_,
+            person0_.CIVILITY as CIVILITY0_,
+            person0_.EMAIL as EMAIL0_,
+            person0_.FIRST_NAME as FIRST5_0_,
+            person0_.IS_ENABLED as IS6_0_,
+            person0_.LAST_NAME as LAST7_0_,
+            person0_.`PASSWORD` as PASSWORD8_0_,
+            person0_.PHOTO as PHOTO0_,
+            person0_.LOGIN as LOGIN0_,
+            person0_.VERSION as VERSION0_ 
+        from
+            person person0_ 
+        where
+            lower(person0_.FIRST_NAME) like ? limit ?
+[2013-05-07 04:52:12,976] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 04:54:21,076] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 04:54:21,323] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 04:54:21,342] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 04:54:21,831] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.138
+[2013-05-07 04:54:21,997] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:54:21,997] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 04:54:22,040] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 04:54:22,040] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 04:54:22,056] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 04:54:22,056] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_1_,
+        this_.BIRTH_DATE as BIRTH2_0_1_,
+        this_.CIVILITY as CIVILITY0_1_,
+        this_.EMAIL as EMAIL0_1_,
+        this_.FIRST_NAME as FIRST5_0_1_,
+        this_.IS_ENABLED as IS6_0_1_,
+        this_.LAST_NAME as LAST7_0_1_,
+        this_.`PASSWORD` as PASSWORD8_0_1_,
+        this_.PHOTO as PHOTO0_1_,
+        this_.LOGIN as LOGIN0_1_,
+        this_.VERSION as VERSION0_1_,
+        securityro2_.PERSON_ID as PERSON1_0_3_,
+        role3_.ID as ROLE2_3_,
+        role3_.ID as ID1_0_,
+        role3_.ROLE_DESC as ROLE2_1_0_,
+        role3_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person this_ 
+    left outer join
+        person_role securityro2_ 
+            on this_.ID=securityro2_.PERSON_ID 
+    left outer join
+        `role` role3_ 
+            on securityro2_.ROLE_ID=role3_.ID 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 04:54:22,253] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* select
+        generatedAlias0 
+    from
+        Person as generatedAlias0 */ select
+            person0_.ID as ID0_,
+            person0_.BIRTH_DATE as BIRTH2_0_,
+            person0_.CIVILITY as CIVILITY0_,
+            person0_.EMAIL as EMAIL0_,
+            person0_.FIRST_NAME as FIRST5_0_,
+            person0_.IS_ENABLED as IS6_0_,
+            person0_.LAST_NAME as LAST7_0_,
+            person0_.`PASSWORD` as PASSWORD8_0_,
+            person0_.PHOTO as PHOTO0_,
+            person0_.LOGIN as LOGIN0_,
+            person0_.VERSION as VERSION0_ 
+        from
+            person person0_ limit ?
+[2013-05-07 04:54:22,257] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 04:54:22,271] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 04:54:22,273] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 04:54:22,275] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 04:54:22,278] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 05:18:47,771] [WARN ] [] [] [o.h.s.i.ConfigContext.getLuceneMatchVersion] HSEARCH000075: Configuration setting hibernate.search.lucene_version was not specified, using LUCENE_CURRENT.
+[2013-05-07 05:18:48,059] [WARN ] [] [] [o.a.s.c.Config.parseLuceneVersionString] You should not use LUCENE_CURRENT as luceneMatchVersion property: if you use this setting, and then Solr upgrades to a newer release of Lucene, sizable changes may happen. If precise back compatibility is important then you should instead explicitly specify an actual Lucene version.
+[2013-05-07 05:18:48,078] [WARN ] [] [] [o.h.i.UUIDHexGenerator.<init>] HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+[2013-05-07 05:18:48,631] [INFO ] [] [] [c.a.d.s.MassIndexerService.createIndex] Indexed [class com.app.demo.domain.Person, class com.app.demo.domain.Role] in 0:00:00.069
+[2013-05-07 05:18:48,846] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        person this_
+[2013-05-07 05:18:48,846] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        count(*) as y0_ 
+    from
+        `role` this_
+[2013-05-07 05:18:48,889] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        `role` this_
+[2013-05-07 05:18:48,889] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as y0_ 
+    from
+        person this_
+[2013-05-07 05:18:48,899] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID1_0_,
+        this_.ROLE_DESC as ROLE2_1_0_,
+        this_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        `role` this_ 
+    where
+        this_.ID in (
+            ?, ?
+        )
+[2013-05-07 05:18:48,900] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* criteria query */ select
+        this_.ID as ID0_1_,
+        this_.BIRTH_DATE as BIRTH2_0_1_,
+        this_.CIVILITY as CIVILITY0_1_,
+        this_.EMAIL as EMAIL0_1_,
+        this_.FIRST_NAME as FIRST5_0_1_,
+        this_.IS_ENABLED as IS6_0_1_,
+        this_.LAST_NAME as LAST7_0_1_,
+        this_.`PASSWORD` as PASSWORD8_0_1_,
+        this_.PHOTO as PHOTO0_1_,
+        this_.LOGIN as LOGIN0_1_,
+        this_.VERSION as VERSION0_1_,
+        securityro2_.PERSON_ID as PERSON1_0_3_,
+        role3_.ID as ROLE2_3_,
+        role3_.ID as ID1_0_,
+        role3_.ROLE_DESC as ROLE2_1_0_,
+        role3_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person this_ 
+    left outer join
+        person_role securityro2_ 
+            on this_.ID=securityro2_.PERSON_ID 
+    left outer join
+        `role` role3_ 
+            on securityro2_.ROLE_ID=role3_.ID 
+    where
+        this_.ID in (
+            ?, ?, ?, ?, ?
+        )
+[2013-05-07 05:18:49,039] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* select
+        generatedAlias0 
+    from
+        Person as generatedAlias0 
+    where
+        lower(generatedAlias0.firstName) like :param0 */ select
+            person0_.ID as ID0_,
+            person0_.BIRTH_DATE as BIRTH2_0_,
+            person0_.CIVILITY as CIVILITY0_,
+            person0_.EMAIL as EMAIL0_,
+            person0_.FIRST_NAME as FIRST5_0_,
+            person0_.IS_ENABLED as IS6_0_,
+            person0_.LAST_NAME as LAST7_0_,
+            person0_.`PASSWORD` as PASSWORD8_0_,
+            person0_.PHOTO as PHOTO0_,
+            person0_.LOGIN as LOGIN0_,
+            person0_.VERSION as VERSION0_ 
+        from
+            person person0_ 
+        where
+            lower(person0_.FIRST_NAME) like ? limit ?
+[2013-05-07 05:18:49,042] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load collection com.app.demo.domain.Person.securityRoles */ select
+        securityro0_.PERSON_ID as PERSON1_0_1_,
+        securityro0_.ROLE_ID as ROLE2_1_,
+        role1_.ID as ID1_0_,
+        role1_.ROLE_DESC as ROLE2_1_0_,
+        role1_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person_role securityro0_ 
+    inner join
+        `role` role1_ 
+            on securityro0_.ROLE_ID=role1_.ID 
+    where
+        securityro0_.PERSON_ID=?
+[2013-05-07 05:18:49,109] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* insert com.app.demo.domain.Person
+        */ insert 
+        into
+            person
+            (BIRTH_DATE, CIVILITY, EMAIL, FIRST_NAME, IS_ENABLED, LAST_NAME, `PASSWORD`, PHOTO, LOGIN, VERSION, ID) 
+        values
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+[2013-05-07 05:18:49,312] [DEBUG] [] [] [o.h.e.j.s.SqlStatementLogger.logStatement] 
+    /* load com.app.demo.domain.Person */ select
+        person0_.ID as ID0_1_,
+        person0_.BIRTH_DATE as BIRTH2_0_1_,
+        person0_.CIVILITY as CIVILITY0_1_,
+        person0_.EMAIL as EMAIL0_1_,
+        person0_.FIRST_NAME as FIRST5_0_1_,
+        person0_.IS_ENABLED as IS6_0_1_,
+        person0_.LAST_NAME as LAST7_0_1_,
+        person0_.`PASSWORD` as PASSWORD8_0_1_,
+        person0_.PHOTO as PHOTO0_1_,
+        person0_.LOGIN as LOGIN0_1_,
+        person0_.VERSION as VERSION0_1_,
+        securityro1_.PERSON_ID as PERSON1_0_3_,
+        role2_.ID as ROLE2_3_,
+        role2_.ID as ID1_0_,
+        role2_.ROLE_DESC as ROLE2_1_0_,
+        role2_.ROLE_NAME as ROLE3_1_0_ 
+    from
+        person person0_ 
+    left outer join
+        person_role securityro1_ 
+            on person0_.ID=securityro1_.PERSON_ID 
+    left outer join
+        `role` role2_ 
+            on securityro1_.ROLE_ID=role2_.ID 
+    where
+        person0_.ID=?
