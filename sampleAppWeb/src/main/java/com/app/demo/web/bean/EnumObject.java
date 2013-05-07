@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import com.app.demo.domain.enums.CivilityEnum;
+import com.app.demo.domain.Civility;
 
 @ManagedBean
 @SessionScoped
@@ -15,7 +15,7 @@ public class EnumObject implements Serializable{
 	public EnumObject() {
 	}
 
-	public CivilityEnum[] getCivilityValues() {
-	    return CivilityEnum.values();
+	public Civility[] getCivilityValues() {
+	    return Civility.values();
    }
 }

@@ -3,7 +3,7 @@
 	<name>guessnumber</name>
 	<comment></comment>
 	<projects>
-		<project>sampleService</project>
+		<project>demoServiceLayer</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

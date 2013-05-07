@@ -19,13 +19,18 @@ import com.app.demo.util.ResourcesUtil;
  */
 public class MessageBundle extends ResourceBundle {
 
+	private ResourcesUtil resourcesUtil;
+
     @Override
     public Enumeration<String> getKeys() {
-        return ResourcesUtil.getInstance().getAsResourceBundle().getKeys();
+        return null;
     }
 
     @Override
     protected Object handleGetObject(String key) {
-        return ResourcesUtil.getInstance().getAsResourceBundle().getObject(key);
+        if (resourcesUtil == null) {
+            resourcesUtil = ResourcesUtil.getInstance();
+        }
+        return resourcesUtil.getProperty(key);
     }
 }

@@ -9,16 +9,31 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
+import org.dom4j.DocumentException;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import com.app.demo.security.SpringSecurityContext;
+
+import com.app.demo.context.UserContext;
 import com.app.demo.domain.Person;
-import com.app.demo.service.PersonService;
+import com.app.demo.repository.PersonRepository;
+import java.awt.Graphics2D;  
+import java.awt.image.BufferedImage;  
+import java.io.ByteArrayInputStream;  
+import java.io.ByteArrayOutputStream;  
+import java.io.File;  
+import java.io.FileInputStream;  
+import java.io.IOException;
+
+import javax.imageio.ImageIO;  
+ 
+import org.primefaces.model.DefaultStreamedContent;   
 
 @ManagedBean
 @SessionScoped
@@ -30,31 +45,44 @@ public class ProfileBean  implements Serializable{
 	private Person person = new Person();
 	private String currentPassword;
 	private String newPassword;
+	private StreamedContent graphicPhoto; 
 	
-	private static PersonService personService;
+	private static PersonRepository personService;
 	
 	
 	@Autowired
-	public ProfileBean(PersonService instance) {
+	public ProfileBean(PersonRepository instance) {
 		System.out.println("ProfileBean.ProfileBean()");
 		if (personService == null) {
 			personService = instance;
 		}
 		
-		String userName = SpringSecurityContext
-		.getUsername();
-		if(person == null ) new Person();
-		person.setUsername(userName);
-		person = personService.getPersonWithAssociation(person);  
+		String userName = UserContext.getUsername();
+		person = personService.getByUsername(userName);
 		setImage();
 	}
 	
 	public void setImage (){
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		/*HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         if(person != null)
-        	session.setAttribute("bytePhoto", Base64.decodeBase64(person.getPhoto64()));
+        	session.setAttribute("bytePhoto", Base64.decodeBase64(person.getPhoto()));
         else
-        	session.setAttribute("bytePhoto", Base64.decodeBase64((String)null));	
+        	session.setAttribute("bytePhoto", Base64.decodeBase64((String)null));	*/
+		
+		try {
+			 //Graphic Text  
+			
+			byte[] photo = Base64.decodeBase64(person.getPhoto());
+			
+			 ByteArrayInputStream is = new ByteArrayInputStream(photo) ;
+			 //graphicPhoto = new DefaultStreamedContent(is, "application/pdf", "downloaded_primefaces.pdf");
+			 graphicPhoto = new DefaultStreamedContent(is,null,"photo");
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		  
+
 	}
 	
 	public void updateUser(ActionEvent actionEvent) {
@@ -85,7 +113,7 @@ public class ProfileBean  implements Serializable{
 	
 	public void handleFileUpload(FileUploadEvent event) {
         try {
-            person.setPhoto64(Base64.encodeBase64String(event.getFile().getContents()));
+            person.setPhoto(Base64.encodeBase64String(event.getFile().getContents()));
             person = personService.merge(person);
         	FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
             FacesContext.getCurrentInstance().addMessage("formUser", msg); 
@@ -117,6 +145,11 @@ public class ProfileBean  implements Serializable{
 
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
+	}
+
+	public StreamedContent getGraphicPhoto() {
+		setImage ();
+		return graphicPhoto;
 	}
 
 	

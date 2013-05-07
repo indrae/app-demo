@@ -16,17 +16,20 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import com.app.demo.context.UserContext;
 import com.app.demo.domain.Person;
-import com.app.demo.security.SpringSecurityContext;
-import com.app.demo.service.PersonService;
+import com.app.demo.repository.PersonRepository;
+import com.app.demo.security.UserDetailsServiceImpl;
+import com.app.demo.web.util.UserContextUtil;
 
 public class Photo extends HttpServlet {
 	private static final long serialVersionUID = 1961456512882456576L;
 
 	@Autowired
-	private PersonService personService;
+	private PersonRepository personService;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -44,11 +47,11 @@ public class Photo extends HttpServlet {
 			isProfile = true;
 
 		if (isProfile) {
-			String userName = SpringSecurityContext.getUsername();
+			String userName = UserContext.getUsername();
 			Person p = new Person();
 			p.setUsername(userName);
 			p = (Person) personService.findUniqueOrNone(p);
-			byte[] photoByte = (byte[]) Base64.decodeBase64(p.getPhoto64());
+			byte[] photoByte = (byte[]) Base64.decodeBase64(p.getPhoto());
 			viewPhoto(req, resp, photoByte);
 		} else {
 			HttpSession session = req.getSession();

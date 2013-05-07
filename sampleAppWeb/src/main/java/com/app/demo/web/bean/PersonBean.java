@@ -26,11 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.app.demo.domain.Civility;
 import com.app.demo.domain.Person;
 import com.app.demo.domain.Role;
-import com.app.demo.domain.enums.CivilityEnum;
-import com.app.demo.service.PersonService;
-import com.app.demo.service.RoleService;
+import com.app.demo.domain.Civility;
+import com.app.demo.repository.PersonRepository;
+import com.app.demo.repository.RoleRepository;
 import com.app.demo.web.bean.support.LazyPersonDataModel;
 import com.app.demo.web.test.ValueGenerator;
 
@@ -46,13 +47,13 @@ public class PersonBean implements Serializable {
 	private Map<String, String> roles;
 	private List<String> selectedRoles;
 	private LazyDataModel<Person> lazyModel;
-	private static PersonService personService;
-	private static RoleService roleService;
+	private static PersonRepository personService;
+	private static RoleRepository roleService;
 
 	
 	
 	@Autowired
-	public PersonBean(PersonService instance, RoleService instance2) {
+	public PersonBean(PersonRepository instance, RoleRepository instance2) {
 		if (personService == null) {
 			personService = instance;
 		}
@@ -83,14 +84,14 @@ public class PersonBean implements Serializable {
 			per.setUsername("sampleUser" + i);
 			per.setEmail(ValueGenerator.getUniqueEmail());
 			per.setIsEnabled(true);
-			per.setCivility(CivilityEnum.MR);
+			per.setCivility(Civility.MR);
 			per.setBirthDate(new Date());
 			per.setFirstName("Sample" + i);
 			per.setLastName("Last" + i);
 			per.setPassword("sample");
 			//personService.save(per); 
 
-			per.addRole(role);
+			per.addSecurityRole(role);
 			personService.merge(per);
 
 		}
@@ -107,10 +108,10 @@ public class PersonBean implements Serializable {
 	public void updateUser(ActionEvent actionEvent) {
 		try {
 			personService.save(person);
-			person.setRoles(new ArrayList<Role>());
+			person.setSecurityRoles(new ArrayList<Role>());
 			for (String s : selectedRoles) {
 				Role r = roleService.getByRoleName(s);
-				person.addRole(r);
+				person.addSecurityRole(r);
 			}
 			person = personService.merge(person);
 			FacesContext.getCurrentInstance().addMessage(
@@ -149,8 +150,8 @@ public class PersonBean implements Serializable {
 				personService.save(personAdd);
 				for (String s : selectedRoles) {
 					Role r = roleService.getByRoleName(s);
-					if (!personAdd.containsRole(r))
-						personAdd.addRole(r);
+					if (!personAdd.containsSecurityRole(r))
+						personAdd.addSecurityRole(r);
 				}
 				personService.merge(personAdd);
 				FacesContext.getCurrentInstance()
@@ -192,10 +193,10 @@ public class PersonBean implements Serializable {
                 session.setAttribute("bytePhoto", event.getFile().getContents());
                 
                 if(event.getComponent().getClientId().equalsIgnoreCase("formAdd:uploadPhotoAdd")){
-                	personAdd.setPhoto64(Base64.encodeBase64String(event.getFile().getContents()));
+                	personAdd.setPhoto(Base64.encodeBase64String(event.getFile().getContents()));
                 }
                 else if(event.getComponent().getClientId().equalsIgnoreCase("form:uploadPhotoEdit")){
-                	person.setPhoto64(Base64.encodeBase64String(event.getFile().getContents()));
+                	person.setPhoto(Base64.encodeBase64String(event.getFile().getContents()));
                 }
                 
 //            }else{
@@ -232,7 +233,7 @@ public class PersonBean implements Serializable {
 		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         if(person != null)
-        	session.setAttribute("bytePhoto", Base64.decodeBase64(person.getPhoto64()));
+        	session.setAttribute("bytePhoto", Base64.decodeBase64(person.getPhoto()));
         else
         	session.setAttribute("bytePhoto", Base64.decodeBase64((String)null));	
         this.person = person;
