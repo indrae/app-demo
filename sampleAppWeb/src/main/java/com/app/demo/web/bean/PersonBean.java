@@ -2,6 +2,8 @@ package com.app.demo.web.bean;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -17,6 +19,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.codec.binary.Base64;
 import org.primefaces.event.FileUploadEvent;
@@ -269,14 +272,19 @@ public class PersonBean implements Serializable {
 	
 	public void setImage (Person person){
 		try {
-			 //Graphic Text  
+	  
+			if(person.getPhoto() != null){
+				byte[] photo = Base64.decodeBase64(person.getPhoto());
 			
-			byte[] photo = Base64.decodeBase64(person.getPhoto());
-			
-			 ByteArrayInputStream is = new ByteArrayInputStream(photo) ;
-			 //graphicPhoto = new DefaultStreamedContent(is, "application/pdf", "downloaded_primefaces.pdf");
-			 graphicPhoto = new DefaultStreamedContent(is,null,"photo");
-			 
+				ByteArrayInputStream is = new ByteArrayInputStream(photo) ;
+				graphicPhoto = new DefaultStreamedContent(is,null,"photo");
+			}else{
+				ServletContext sc = (ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext();
+				String filename = sc.getRealPath("/resources/images/nophoto.jpeg");
+
+				File file = new File(filename); 
+				graphicPhoto = new DefaultStreamedContent(new FileInputStream(file), "image/jpeg","nophoto");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -88,7 +88,8 @@
 					               rendered="#{loginBean.isAdmin}">  
 					  		<h:panelGrid width="100%"  id="displayViewPhoto" columns="1" cellpadding="10"  
 								cellspacing="10"  >  
-							     <p:graphicImage id="photoView"   cache="false" url="/Photo" />  
+							     <p:graphicImage  id="photoView" cache="true" value="#{personBean.graphicPhoto}"  /> 
+							     
 							</h:panelGrid>
 					        <h:panelGrid id="display" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
@@ -154,7 +155,8 @@
 							            auto="true"
 							            style=""
 							             />  
-							     <p:graphicImage id="photoEdit"   cache="false" url="/Photo" />  
+							     <p:graphicImage  id="photoEdit" cache="true" value="#{personBean.graphicPhoto}"  /> 
+							     
 							</h:panelGrid>
 							<h:panelGrid width="100%"  id="displayEdit" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
@@ -253,7 +255,8 @@
 							            auto="true"
 							            style=" "
 							            />  
-							     <p:graphicImage id="photoAdd"   cache="false" url="/Photo" />  
+							     <p:graphicImage  id="photoAdd" cache="true" value="#{personBean.graphicPhotoAdd}"  /> 
+							      
 							</h:panelGrid>
 							<h:panelGrid width="100%"  id="displayAdd" columns="3" cellpadding="10"  
 								cellspacing="10"  >  
