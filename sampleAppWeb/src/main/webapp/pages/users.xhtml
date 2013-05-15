@@ -85,7 +85,7 @@
 
 						<p:dialog header="#{i18n['app.label.dialog.userTitle']}" widgetVar="personDialog" resizable="false"  
 					              width="500" showEffect="explode" hideEffect="explode" height="530" 
-					               rendered="#{loginBean.isAdmin}">  
+					               rendered="#{!loginBean.isAdmin}">  
 					  		<h:panelGrid width="100%"  id="displayViewPhoto" columns="1" cellpadding="10"  
 								cellspacing="10"  >  
 							     <p:graphicImage  id="photoView" cache="true" value="#{personBean.graphicPhoto}"  /> 
