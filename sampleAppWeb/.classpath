@@ -16,6 +16,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/demoServiceLayer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/sampleAppService"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

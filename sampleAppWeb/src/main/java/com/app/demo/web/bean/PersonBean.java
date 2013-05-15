@@ -29,6 +29,8 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.app.demo.domain.Civility;
@@ -137,7 +139,10 @@ public class PersonBean implements Serializable {
 
 	public void addUser(ActionEvent actionEvent) {
 		try {
-			personAdd.setPassword("12345");
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		    String hashedPassword = passwordEncoder.encode(personAdd.getUsername());
+			personAdd.setPassword(hashedPassword);
+			personAdd.setIsEnabled(true);
 			if(personService.getByUsername(personAdd.getUsername()) != null){
 				FacesContext.getCurrentInstance().addMessage(
 						"form",

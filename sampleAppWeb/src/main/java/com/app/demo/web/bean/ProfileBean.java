@@ -18,6 +18,8 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.app.demo.context.UserContext;
@@ -94,9 +96,14 @@ public class ProfileBean  implements Serializable{
 	}
 	
 	public void updatePassword(ActionEvent actionEvent) {
-		System.out.println("ProfileBean.updatePassword()");
-		if(person.getPassword().equals(currentPassword)){
-			person.setPassword(newPassword);
+		System.out.println("ProfileBean.updatePassword() entering....");
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+	    //compare current password
+	    if(passwordEncoder.matches(currentPassword, person.getPassword())){
+	    	String hashedNewPassword = passwordEncoder.encode(newPassword);
+			
+		    person.setPassword(hashedNewPassword);
 			try {
 				person = personService.merge(person);
 				FacesContext.getCurrentInstance().addMessage("formUser", new FacesMessage(FacesMessage.SEVERITY_INFO,"Update Password Successful", "Please re-login"));  

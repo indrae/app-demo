@@ -62,9 +62,15 @@ public class LoginBean  implements Serializable {
             isAdmin = request.isUserInRole("ROLE_ADMIN");
             
             return "/pages/users?faces-redirect=true";
+		} catch (IllegalArgumentException ie)  {
+			System.out.println("Login Failed on IllegalArgumentException");
+			System.out.println(ie.getMessage());
+        	FacesContext.getCurrentInstance().addMessage("formLogin", new FacesMessage(FacesMessage.SEVERITY_WARN,"Login Failed", "User Name and Password Not Match!"));  
+             
+            return "/login";
         } catch (AuthenticationException ex) {
-        	System.out.println("Login Failed");
-        	ex.printStackTrace();
+        	System.out.println("Login Failed on AuthenticationException");
+        	System.out.println(ex.getMessage());
         	FacesContext.getCurrentInstance().addMessage("formLogin", new FacesMessage(FacesMessage.SEVERITY_WARN,"Login Failed", "User Name and Password Not Match!"));  
              
             return "/login";
