@@ -31,8 +31,14 @@
 	<context:property-placeholder location="classpath*:database.properties,classpath*:hibernate.properties" />
 
 	<!-- security -->
+	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
 	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider user-service-ref="userDetailsService" />
+		<security:authentication-provider user-service-ref="userDetailsService" >
+			<security:password-encoder ref="encoder" />
+	           <!--  <security:salt-source user-property="username"/>
+	        </security:password-encoder> -->
+	    </security:authentication-provider>
 	</security:authentication-manager>
 	<security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled" />
 
